@@ -2,9 +2,90 @@
 
 <br>
 
+
+# Code Review
+
+<br>
+
+## Revisor
+
+<br>
+
+* Como revisor, você deve pensar como outra pessoa. Ao apontar sugestões, tente formular frases a partir de um ponto de vista mais pessoal ex: "Eu sugiro que...", "Eu acho...", "Para mim, esse ponto..."
+
+* Sempre, SEMPRE a revisão é sobre o código, nunca sobre o autor. ex: ❌ "Você está fazendo uma implementação errada ..."
+✅ " O código está fazendo uma implementação errada..."
+
+* Faça perguntas de pontos que não ficaram claros, ou ofereça sugestões através de perguntas. Por meio das respostas, podemos entender melhor a decisão para certo ponto do código.
+
+* Faça comentários através Observações, Impactos e Requisições ex: Observação "Essa implementação é repetida em outro contexto, poderia ser reutilizada"
+Impacto "Essa implementação torna a compreensão do real objetivo do método não tão claro para mim" Request " Para esse cenário eu sugiro usar X padrão de projeto, por N motivos"
+
+* Entenda que existem diferentes soluções para o mesmo problema.
+
+* Distinguir entre boas práticas e gosto pessoal
+
+* Faça elogios ao código quando necessário, mesmo que precise de algum ajuste.
+
+* Se pergunte sempre se sua afirmação é verdadeira, se é necessária e se é gentil.
+
+* Valorize o esforço que o autor teve em escrever o código
+
+<br>
+
+## Autor
+
+<br>
+
+* Como autor, você deve ter humildade para ouvir sobre o seu trabalho
+
+* É normal acontecer falhas, ou ter implementações melhores, ou esquecermos de algum detalhe
+
+* Lembre-se que um código escrito em 10 horas é revisado em 10 minutos
+
+* Não leve as críticas para o lado pessoal, você não é o seu código
+
+* Você e o revisor estão no mesmo time
+
+* Somos sempre enviesados pelo nosso próprio código. Esteja aberto a opiniões externas
+ 
+ <br>
+
+
+## Código
+
+<br>
+
+* Ao revisar um código é bom ter um checklist do que precisa ser avaliado. Conferir todos aspectos do código de uma vez pode ser exaustivo e propenso a falhas. É bom atentar-se a um tópico e validar todo conteúdo sob aquela ótica.
+
+- Eu entendo o que o código faz?
+
+- O código preenche todos os requisitos de implementação?
+
+- O código faz o que eu espero que ele faça?
+
+* Usando templates para Pull Requests, fica fácil analisar o que aquela PR deve resolver
+
+* A descrição da PR/commit está de acordo com o que o código executa?
+
+- Atenção a sintaxe, não tem nenhum code smells ?
+
+- Atenção se foi feito um tratamento de exceções
+
+- Atenção ao uso correto dos design patterns e a over-engineering
+
+<br>
+
+
 # Gitflow
 
+<br>
 
+## Desenho do fluxo
+
+![gitflow.drawio.png](./flows/gitflow.drawio.png)
+
+<br>
 
 ## Praticando com Git Flow
  
@@ -258,3 +339,42 @@ git flow hotfix finish 1.1
 ```shell
 git flow hotfix publish 1.1
 ```
+<br>
+
+# Validar a PR
+
+<br>
+
+## Abrindo PR com a Feature
+
+<br>
+
+
+* **Primeiro é feito o commit localmente**
+```shell
+git add . 
+git commit -m ".."
+git push origin feature/...
+
+```
+* **Após o push deve ser aberto a PR**
+
+1. Acesse merge request
+2. Selecione as branchs e clique em compare
+3. Coloque para aprovar o membros da sua squad, outro desenvolvedor ou arquiteto
+
+<br>
+
+## Fluxo da PR
+
+
+1. Alterou localmente
+
+2. Subiu com as alterações com push
+
+3. Abriu o PR
+
+4. Colocar alguém que não te ajudou a desenvolver a funcionalidade para aprovar
+
+
+
