@@ -1,354 +1,70 @@
-# Projeto Iguá CIAM
+# Iguá Auth
+## _Api de autenticação da Iguá Saneamento_
 
-<br>
+Igua auth realiza o processo de autenticação de rotas a partir do uso do Azure AD B2C como serviço acoplado que permite o uso de single sign-on e login social.
 
+## Ferramentas e linguagem
 
-# Code Review
+A Api foi construída em node js (javascript) e express. Para a visualização de documentação das rotas foi usado o *swagger* que é disponibilizado em um *endpoint* específico `/doc` e que permite consultar todos as rotas disponíveis para uso. Para organizar o projeto utilizou-se o husky, eslint, prettier, commitlint e commitizen. A estrutura do projeto **deve** seguir o seguinte padrão:
 
-<br>
+    src
+    │   app.js # Inicializador do projeto (ponto de partida)
+    └───api
+	    └───controllers # Funções da controllers do express route
+	    └───models # Modelos do banco de dados
+	    └───services # Regras de negócio
+	    └───subscribers # Eventos async
+	    └───repositories* # Query builders
+    └───config # Configuração das variaveis de ambiente
+    └───jobs # Tarefas de rotinas
+    └───node_modules # Modulos utilizados no app
+    └───utils # Trechos de código pequeno
+    └───helpers # Trechos de arquitetura de código
+    └───types # Tipagem (d.ts) para Typescript
 
-## Revisor
+## Comandos para inicialização
 
-<br>
+Após clonar o projeto, para instalar os módulos externos execute o comando:
 
-* Como revisor, você deve pensar como outra pessoa. Ao apontar sugestões, tente formular frases a partir de um ponto de vista mais pessoal ex: "Eu sugiro que...", "Eu acho...", "Para mim, esse ponto..."
+    yarn install
 
-* Sempre, SEMPRE a revisão é sobre o código, nunca sobre o autor. ex: ❌ "Você está fazendo uma implementação errada ..."
-✅ " O código está fazendo uma implementação errada..."
+ao término, é necessário criar um arquivo com o nome `.env` na raiz do projeto contendo as seguintes chaves obtidas no Azure Ad B2C:
 
-* Faça perguntas de pontos que não ficaram claros, ou ofereça sugestões através de perguntas. Por meio das respostas, podemos entender melhor a decisão para certo ponto do código.
+    CLIENT_ID
+    TENANT_ID
+    CLIENT_SECRET
+    REDIRECT_ROUTE
+    AUTHORITY
 
-* Faça comentários através Observações, Impactos e Requisições ex: Observação "Essa implementação é repetida em outro contexto, poderia ser reutilizada"
-Impacto "Essa implementação torna a compreensão do real objetivo do método não tão claro para mim" Request " Para esse cenário eu sugiro usar X padrão de projeto, por N motivos"
+Feito isso, o projeto já pode ser dado *start* com o comando `yarn dev` que fará com que o *nodemon* escute na porta selecionada para cada mudança feita em código sem que precise *restartar* o server novamente. 
 
-* Entenda que existem diferentes soluções para o mesmo problema.
+Para *debug*, ao utilizar o *vscode* (recomendado), acione o a tecla `F5` que inicializará o processo automaticamente no editor de código.
 
-* Distinguir entre boas práticas e gosto pessoal
+## Commits
 
-* Faça elogios ao código quando necessário, mesmo que precise de algum ajuste.
+O processo de *commit* é padronizado pela lib `commitlint` e auxiliado pela lib `commitizen`. Para realizar um commit, **não** utilizar o comando `git commit -m "..."`, mas sim o seguinte comando apenas:
 
-* Se pergunte sempre se sua afirmação é verdadeira, se é necessária e se é gentil.
+    yarn commit
 
-* Valorize o esforço que o autor teve em escrever o código
+Ao fazer isso, o terminal abrirá opções com diálogos para criar o *commit* de forma padronizada como o `commitizen`.
 
-<br>
+## Swagger autogen
 
-## Autor
+Para atualizar a documentação do swagger, é necessário executar o comando:
 
-<br>
+    node swagger-autogen
 
-* Como autor, você deve ter humildade para ouvir sobre o seu trabalho
+## Gitflow
 
-* É normal acontecer falhas, ou ter implementações melhores, ou esquecermos de algum detalhe
-
-* Lembre-se que um código escrito em 10 horas é revisado em 10 minutos
-
-* Não leve as críticas para o lado pessoal, você não é o seu código
-
-* Você e o revisor estão no mesmo time
-
-* Somos sempre enviesados pelo nosso próprio código. Esteja aberto a opiniões externas
- 
- <br>
-
-
-## Código
-
-<br>
-
-* Ao revisar um código é bom ter um checklist do que precisa ser avaliado. Conferir todos aspectos do código de uma vez pode ser exaustivo e propenso a falhas. É bom atentar-se a um tópico e validar todo conteúdo sob aquela ótica.
-
-- Eu entendo o que o código faz?
-
-- O código preenche todos os requisitos de implementação?
-
-- O código faz o que eu espero que ele faça?
-
-* Usando templates para Pull Requests, fica fácil analisar o que aquela PR deve resolver
-
-* A descrição da PR/commit está de acordo com o que o código executa?
-
-- Atenção a sintaxe, não tem nenhum code smells ?
-
-- Atenção se foi feito um tratamento de exceções
-
-- Atenção ao uso correto dos design patterns e a over-engineering
-
-<br>
-
-
-# Gitflow
-
-<br>
-
-## Desenho do fluxo
+Para a realização do projeto, foi padronizada o *gitflow* com a lib cli externa chamada [cheatsheet do git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.pt_BR.html). É possível entender o seu funcionamento de forma rápida lendo a sua documentação. O padrão adotado para a criação das *branches* então foi definido como `Id da task no Jira-nome-da-task`, sendo o nome da task todo em *lowercase* e *kebabcase*. Todos os padrões da lib cheatsheet foram utilizados. 
+### Desenho do fluxo
 
 ![gitflow.drawio.png](./flows/gitflow.drawio.png)
 
-<br>
+## Azure AD B2C
 
-## Praticando com Git Flow
- 
-<br>
-
-### Antes de começar 
- 
-1. Primeiro passo é verificar se o git-flow já veio instalado com o seu git:
-
-
-```shell 
-git flow version
-```
-Se não exibir a versão, significa que você precisa instalar o gitl-flow.
-
-<br>
-
-### Instalando git-flow
- 
-<br>
-
-#### Mac
-
-```shell
- 
-  brew install git-flow-avh
-``` 
-
-#### Macports
-
-```shell 
-$ port install git-flow-avh
-``` 
-
-
-#### Windows
-
-```powershell 
-
-wget -q -O - --no-check-certificate https://raw.github.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh install stable | bash
-Acesse também o tutorial: Installing on Windows · petervanderdoes/gitflow-avh Wiki 
-
-```
-
-Linux
-
-```shell 
-apt-get install git-flow
-``` 
-
-<br>
-
-
-### Iniciando o git flow
- 
-<br>
-
-
-```powershell
-git flow init
-```
-
-
-**OBS: O git flow já vem com o git instalado e após executar o comando ele irá perguntar sobre as branchs.**
-
-* Branch de produção?
-
-* A branch de desenvolvimento?
-
-* Branch de support? [feature, bugfix]
-
- 
-
-**OBS: Ao finalizar todas as perguntas o git flow irá direcionar para branch develop de imediato.**
-
- 
-<br>
-
-### Alterações na develop
-
-<br> 
-
-**OBS: Parar alterar a develop primeiro é feito a mudança para branch feature e depois o merge para develop.**
-
-<br>
-
-### Novas funcionalidades e atualização: branch feature
-
-* Da branch develop você vai para branch feature 
-
-* Passando para branch feature para desenvolver uma nova atualização dentro do projeto e manter a develop funcionando.
-
-```shell
-git flow feature start function_stages
-
-```
-
-* `git flow - é o comando que indica que você está trabalhando com git flow`
-* `feature - é o comando para indicar que você vai iniciar ou finalizar o trabalho em uma branch feature.`
-
-* `start - comando que indica que você vai começar algo novo.`
-
-* `function_stages - é o nome da branch feature.`
-
-<br>
- 
-1. Comece a fazer as alterações e atualizações na branch feature conforme foi definido. Depois comece os commits.
-
-```shell
-git add .
-git commit -m “add function stages control”
-``` 
-
-<br>
-
-2. Não tem mais nada para alterar, pode voltar para develop
-
-**PR no Git lab**
-
-```shell
-git push origin feature/function
-
-Abrir o PR
-
-``` 
- 
-<br> 
-
-**Finish com git flow**
-
-```shell
-git flow feature finish function_stages
-```
-**OBS: O comando vai fazer o merge para develop e  excluir a branch localmente e do github e mudar para develop.**
-
-<br> 
-
-3. Continuar o desenvolvimento da funcionalidade daquela feature, faz o publish.
-
-```shell
-git flow feature publish function_stages
-```
-**OBS: Vai fazer o push da branch feature no github, ou, o repositório que estiver utilizando.**
-
- 
-<br>
- 
-### Iniciando a release para produção
- 
-<br>
-
-### Iniciar a branch da release
-
-```shell
-git flow release start 1.0
-```
-**OBS: foi criado a release 1.0 e entrou na branch.** É feito o teste, caso der algum problema, o bug deve ser resolvido na branch release. 
-Após os teste é finalizado a release para que seja feito merge com a main.
-
-
-<br>
-
-#### Se não houver problema
-
-<br>
-
-**PR no Git lab**
-
-```shell
-git push origin release/1.0
-ABRIR PR no gitlab
-```
-
-<br>
-
-**Finish com git flow**
-
-```shell
-git flow release finish 1.0
-```
-
-<br>
-
-### Se houver problema
-
-
-**O problema deve ser ajustado na própria release, caso seja algo complexo criar um bugfix.**
-
-
-```shell
-git add . 
-
-git commit -m “...”
-
-git push origin release/1.0
-
-```
-
-### Hotfix
-
-<br>
-
-Quero fazer pequenas modificações em um script para produção, hotfix. Quero colocar uma variável, a cor de um elemento do dom, a largura de um elemento, corrigir um pequeno problema, etc.
-
- 
-
-1. A partir da branch main/master eu faço o seguinte comando**
-
-```shell
-git flow hotfix start 1.1
-```
-
-2. Faço as alterações para corrigir o problema ou atualizar algo sem modificar nenhuma estrutura.
-
-<br> 
-
-3. faço o commit 
-
-```shell
-git add .
-git commit -m “...”
-```
-<br>
-
-4. Finalizo a hotfix 
-
-
-**PR no Git lab**
-
-```shell
-git push origin hotfux/1.1
-ABRIR PR no gitlab
-```
-
-<br>
-
-
-**Finish com git flow**
-
-```shell
-git flow hotfix finish 1.1
-
-```
-
-**OBS:Será feito o merge para main e develop. E será jogado para branch develop**
-
-<br> 
-
-#### Alguém precisa trabalhar nessa hotfix?
- 
-```shell
-git flow hotfix publish 1.1
-```
-<br>
-
-# Validar a PR
-
-<br>
-
-## Abrindo PR com a Feature
-
-<br>
-
+## Code Review
+### Abrindo PR com a Feature
 
 * **Primeiro é feito o commit localmente**
 ```shell
@@ -363,10 +79,7 @@ git push origin feature/...
 2. Selecione as branchs e clique em compare
 3. Coloque para aprovar o membros da sua squad, outro desenvolvedor ou arquiteto
 
-<br>
-
-## Fluxo da PR
-
+### Fluxo da PR
 
 1. Alterou localmente
 
@@ -375,9 +88,6 @@ git push origin feature/...
 3. Abriu o PR
 
 4. Colocar alguém que não te ajudou a desenvolver a funcionalidade para aprovar
-
-
-<br>
 
 # Estrutura do framework cypress
 
