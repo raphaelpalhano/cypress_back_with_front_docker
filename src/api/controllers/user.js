@@ -1,6 +1,6 @@
 const express = require('express');
 const Msid = require('../../../helpers/msidExpress');
-const UserService = require('../services/userService');
+const UserService = require('../services/user/user');
 
 const userServiceInstance = new UserService();
 
