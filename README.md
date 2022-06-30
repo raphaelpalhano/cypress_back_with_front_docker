@@ -56,7 +56,7 @@ Para atualizar a documentação do swagger, é necessário executar o comando:
 
 ## Gitflow
 
-Para a realização do projeto, foi padronizada o *gitflow* com a lib cli externa chamada [cheatsheet do git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.pt_BR.html). É possível entender o seu funcionamento de forma rápida lendo a sua documentação. O padrão adotado para a criação das *branches* então foi definido como `Id da task no Jira-nome-da-task`, sendo o nome da task todo em *lowercase* e *kebabcase*. Todos os padrões da lib cheatsheet foram utilizados. 
+Para a realização do projeto, foi padronizada o *gitflow* com a lib cli externa chamada [cheatsheet do git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.pt_BR.html). É possível entender o seu funcionamento de forma rápida lendo a sua documentação. O padrão adotado para a criação das *branches* então foi definido como `Id da task no Jira-nome-da-task`, sendo o nome da task todo em *lowercase* e *kebabcase*. Todos os padrões da lib cheatsheet foram utilizados e se encontram entre os módulos do projeto a ser instalado. Não é necessário instalá-lo globalmente. 
 ### Desenho do fluxo
 
 ![gitflow.drawio.png](./flows/gitflow.drawio.png)
