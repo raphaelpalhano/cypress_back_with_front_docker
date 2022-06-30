@@ -1,0 +1,52 @@
+image: node:16.15.1
+
+
+stages:
+   - test          
+   - build
+   - deploy
+
+
+unit-test-job:       # This job runs in the build stage, which runs first.
+  stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
+  script:
+    - echo "Compiling the code..."
+    - echo "Compile complete."
+    - node --version
+    - echo $KEY
+
+
+e2e-test-job:
+  stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"' 
+  script:
+    - echo "Compiling the code..."
+    - echo "Compile complete."
+    - node --version
+    - echo $KEY
+
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'  
+  script:
+    - echo "Compiling the code..."
+    - echo "Compile complete."
+    - node --version
+    - echo $KEY
+
+
+deploy-job:       # This job runs in the build stage, which runs first.
+  stage: deploy
+  only:
+    - main
+  script:
+    - echo "Compiling the code..."
+    - echo "Compile complete."
+    - node --version
+    - echo $KEY
+  

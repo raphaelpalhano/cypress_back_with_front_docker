@@ -34,3 +34,16 @@ lerna-debug.log*
 !.vscode/extensions.json
 node_modules
 .env
+cypress.env.json
+
+#reports
+cypress/videos/spec/*.feature.mp4
+
+reports/html/assets
+reports/html/index.html
+reports/html/*.js
+reports/json/*.json
+reports/junit/*.xml
+
+
+
