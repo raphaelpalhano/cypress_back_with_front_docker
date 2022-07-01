@@ -10,7 +10,7 @@ stages:
 unit-test-job:       # This job runs in the build stage, which runs first.
   stage: test
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
+    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
@@ -21,32 +21,27 @@ unit-test-job:       # This job runs in the build stage, which runs first.
 e2e-test-job:
   stage: test
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"' 
+    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
-    - node --version
-    - echo $KEY
+    - echo $CI_BUILD_REF_NAME
+    - echo $CI_OPEN_MERGE_REQUESTS
 
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'  
+    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
-    - node --version
-    - echo $KEY
+    - echo $CI_COMMIT_BRANCH
+    - echo $CI_PIPELINE_SOURCE
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
   stage: deploy
-  only:
-    - main
+  rules:
+    - if: '$CI_BUILD_REF_NAME == "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
     - node --version
-    - echo $KEY
-  
+
