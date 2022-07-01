@@ -69,7 +69,7 @@ Para a realização do projeto, foi padronizada o *gitflow* com a lib cli extern
 * **Primeiro é feito o commit localmente**
 ```shell
 git add . 
-git commit -m ".."
+yarn commit
 git push origin feature/...
 
 ```
