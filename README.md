@@ -63,6 +63,27 @@ Para a realização do projeto, foi padronizada o *gitflow* com a lib cli extern
 
 ## Azure AD B2C
 
+### Maneiras de Desenvolver o sistema de autenticacao
+
+#### Azure AD B2C Authentication
+
+É a forma mais segura atualmente de estruturar o barramento pelo Azure AD B2C, 
+visto que você utiliza a estrutura que a própria Microsoft disponibiliza.
+
+#### OAuth 2.0 Implict Flow
+
+O OpenID Connect (OIDC) é um protocolo de autenticação aberto que cria perfis e estende o OAuth 2.0 para adicionar uma camada de identidade . O OIDC permite que os clientes confirmem a identidade de um usuário final usando autenticação por um servidor de autorização.
+
+#### OAuth 2.0 Device Flow
+A plataforma de identidade da Microsoft oferece suporte à concessão de autorização de dispositivo , que permite que os usuários entrem em dispositivos com restrição de entrada, como smart TV, dispositivo IoT ou impressora. Para habilitar esse fluxo, o dispositivo faz com que o usuário visite uma página da Web em seu navegador em outro dispositivo para fazer login. Depois que o usuário fizer login, o dispositivo poderá obter tokens de acesso e atualizar tokens conforme necessário.
+
+##### OAuth 2.0 ROPC
+
+A plataforma de identidade da Microsoft oferece suporte à concessão de ROPC (credenciais de senha de proprietário do recurso) OAuth 2.0, que permite que um aplicativo entre no usuário manipulando diretamente sua senha. Este artigo descreve como programar diretamente no protocolo do seu aplicativo.
+
+**OBS:** `A Microsoft recomenda que você não use o fluxo ROPC. Na maioria dos cenários, alternativas mais seguras estão disponíveis e são recomendadas. Esse fluxo requer um alto grau de confiança no aplicativo e carrega riscos que não estão presentes em outros fluxos.`
+
+
 ## Code Review
 ### Abrindo PR com a Feature
 
@@ -149,11 +170,13 @@ And selecionar o filtro de ordenação
  iniciar o cenário.
 
 
+
   **Exemplo**
 
 ~~~gherkin
       Background: Iniciar na página de exemplo
-      Given o acesso a plataforma
+        Given o acesso a plataforma
+
 ~~~
 <br>
 
@@ -222,13 +245,12 @@ Given(`o acesso a plataforma`, () => {
     - todos os seletores por meio de classes
     - Cada classe representa a relação de elementos de uma página
 
-  **LoginElement**
+**LoginElement**
+
 ~~~javascript
   export class LoginElement{
 
     static input = (campValue) => `[data-test=${campValue}]`
-
-    static button = (campValue) => `[data-test=${campValue}]`
 
 }
 ~~~
@@ -262,14 +284,15 @@ export class LoginPage extends BasePage{
 ## 5. utils
   * **utils**
     - Parte separada para criar libs, um arquivo uma responsabilidade.
-    - fileManager == gerenciar arquivos com leituras e etc.
 
 <br>
 
 
 # Configuração inicial
 
+
 <br>
+
 
 
 ## 1. VSC
@@ -283,7 +306,8 @@ export class LoginPage extends BasePage{
 
 
 ## 2. instalações
- * yarn i --save-dev
+
+ * yarn i 
  * yarn i --production
 
 <br>
@@ -297,7 +321,6 @@ export class LoginPage extends BasePage{
 
 # Instalação e execução
 
-  * Instalar: `yarn i {package_name} -D`.
   * Rodar em modo headless: `yarn cy:run`
   * Rodar em tela gráfica: `yarn cy:open`
   * Gerar o report HTML(sempre após rodar o cypress): `yarn run cy:report`
@@ -314,23 +337,20 @@ export class LoginPage extends BasePage{
   * [**Multiple-cucumber-html-reporter**](https://www.npmjs.com/package/multiple-cucumber-html-reporter)
   * [**Faker-br**](https://www.npmjs.com/package/faker-br)
 
-  * [**Command**]: **yarn i --save-dev {package}**
+
 
 <br>
+
 
 
 # Como rodar o projeto pelo docker:
 
   * docker build -t <nome_da_imagem> .
-  * docker container run --rm -it -e tags=@tag -v %cd%:/usr/src/e2e <nome_da_imagem>
-  * docker run -i -v "%cd%":/usr/src/e2e -t <nome_da_imagem> --spec cypress/integration/spec/*.feature
+  * Shell: docker container run --rm -it -e tags=@tag -v %cd%:/usr/src/e2e <nome_da_imagem>
+  * Powershell: docker run -i -v "%cd%":/usr/src/e2e -t <nome_da_imagem> --spec cypress/integration/spec/*.feature
   * `O comando acima não funciona no Powershell devido aos dois pontos após %cd%`
 
-  * -it (ativa logs)
-  * -e tags=@tag (nome da variável de ambiente ou da tag em sí)
-  * -v %cd%:/usr/src/e2e (cria volume entre o container e o pc)
-
-<br>
+  * [**Command**]: **yarn i --save-dev {package}**
 
 # Configuração do steps do cucumber
 

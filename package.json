@@ -2,7 +2,7 @@
   "name": "igua-auth",
   "version": "1.0.0",
   "main": "src/api/app.js",
-  "license": "ULICENSED",
+  "license": "MIT",
   "scripts": {
     "prestart": "node swagger.js",
     "start": "NODE_ENV=production node src/api/app.js",
@@ -15,6 +15,8 @@
     "swagger-autogen": "node swagger.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "cy:open:prod": "cypress open --env configFile=prod",
+    "cy:run:prod": "cypress run --env configFile=prod",
     "cy:tags": "cypress-tags run -e TAGS=@developed",
     "cy:report": "node ./cypress/support/report/reporter.js",
     "cy:clear": "node ./cypress/support/report/clear.js"

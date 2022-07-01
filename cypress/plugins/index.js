@@ -17,6 +17,7 @@ module.exports = (on, config) => {
     return launchOptions;
   });
 
-  const file = config.env.configFile || 'prod';
+  const file = config.env.configFile || 'develop';
+
   return getConfigurationByFile(file);
 };

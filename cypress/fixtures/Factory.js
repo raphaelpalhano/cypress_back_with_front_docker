@@ -5,8 +5,8 @@ export class Factory {
     switch (loginType) {
     case 'admin':
       return {
-        email: Cypress.env('email'),
-        password: Cypress.env('password'),
+        email: Cypress.env('EMAIL'),
+        password: Cypress.env('PASSWORD'),
       };
     case 'valid':
       return {
@@ -33,8 +33,8 @@ export class Factory {
     case 'admin':
       return {
         nome: 'Fulano',
-        email: Cypress.env('email'),
-        password: Cypress.env('password'),
+        email: Cypress.env('EMAIL'),
+        password: Cypress.env('PASSWORD'),
         administrador: 'true',
       };
     case 'valid':
