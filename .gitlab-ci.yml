@@ -1,10 +1,7 @@
-image: docker:19.03.12
-services:
-  - docker:19.03.12-dind
+image: node:16.5.1
 
 
 stages:
-  - build
   - test          
   - deploy
 
@@ -27,23 +24,18 @@ variables:
   PASSWORD: $PASSWORD
 
 
+before_script:
+  - apt-get update && apt-get install --yes libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+  - yarn install
+  - yarn run init:serv
 
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
-  
 
 
 e2e-test-job:
-  image: node:16.15.1
   stage: test
   script:
-    - apt-get update && apt-get install --yes libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-    - npm install
-    - npm run cy:run
+    - yarn run cy:run
+
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
