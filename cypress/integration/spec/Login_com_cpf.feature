@@ -11,4 +11,4 @@ Feature: Acessando o sistema de autenticação com CPF
     Scenario: Autenticação com CPF válido
         Given que acesso o sistema de autenticacao
         When efetuo login com CPF "valid"
-        #Then devo visualizar o painel da igua
+        #Then o usuario deve estar autenticado
