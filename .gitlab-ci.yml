@@ -1,47 +1,59 @@
-image: node:16.15.1
+image: docker:19.03.12
+services:
+  - docker:19.03.12-dind
 
 
 stages:
-   - test          
-   - build
-   - deploy
+  - build
+  - test          
+  - deploy
+
+#workflow:
+#  rules:
+#    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+#    - if: $CI_MERGE_REQUEST_APPROVED
 
 
-unit-test-job:       # This job runs in the build stage, which runs first.
-  stage: test
-  rules:
-    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
-  script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
-    - node --version
-    - echo $KEY
+
+variables:
+  CLIENT_ID: $CLIENT_ID
+  TENANT_ID: $TENANT_ID
+  CLIENT_SECRET: $CLIENT_SECRET
+  REDIRECT_ROUTE: $REDIRECT_ROUTE
+  AUTHORITY: $AUTHORITY
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+  USER: $USER
+  PASSWORD: $PASSWORD
 
 
-e2e-test-job:
-  stage: test
-  rules:
-    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
-  script:
-    - echo $CI_BUILD_REF_NAME
-    - echo $CI_OPEN_MERGE_REQUESTS
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
-  rules:
-    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
-    - echo $CI_COMMIT_BRANCH
-    - echo $CI_PIPELINE_SOURCE
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+  
+
+
+e2e-test-job:
+  stage: test
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker run $CONTAINER_TEST_IMAGE npm run cy:run
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
   stage: deploy
   rules:
-    - if: '$CI_BUILD_REF_NAME == "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_COMMIT_REF_NAME == "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_MERGE_REQUEST_APPROVED
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
     - node --version
+  when: on_success
 

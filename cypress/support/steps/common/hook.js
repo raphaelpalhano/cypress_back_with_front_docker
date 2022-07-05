@@ -8,4 +8,5 @@ Before(() => {
 
 After(() => {
   cy.log('Finish feature');
+  cy.visit('/signout');
 });

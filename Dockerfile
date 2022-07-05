@@ -1,8 +1,8 @@
-FROM node:16.14
+FROM node:16.15.1
 
-RUN mkdir /usr/src/e2e
+RUN mkdir /usr/src/app
 
-WORKDIR /usr/src/e2e
+WORKDIR /usr/src/app
 
 #Executar apenas para OS Ubuntu/Debian
 # RUN apt-get update && apt-get install --yes libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
@@ -13,4 +13,6 @@ RUN npm install
 
 COPY . .
 
-ENTRYPOINT [ "npm", "run", "cy:tags", "TAGS=${tags}" ]
+EXPOSE 4000
+
+CMD ["npm", "run", "dev"]

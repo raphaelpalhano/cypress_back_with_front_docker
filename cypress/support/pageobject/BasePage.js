@@ -35,15 +35,15 @@ export class BasePage {
     });
   }
 
-  static async getElementText(element, index = undefined) {
+  static getElementText(element, index = undefined) {
     return this.getElement(element, index).invoke('text');
   }
 
-  static async typeValue(element, value, force = false) {
+  static typeValue(element, value, force = false) {
     if (force === true) {
-      await this.getElement(element).type(value, { force: true });
+      this.getElement(element).type(value, { force: true }, { log: false });
     } else {
-      await this.getElement(element).type(value);
+      this.getElement(element).type(value, { log: false });
     }
   }
 
@@ -59,7 +59,7 @@ export class BasePage {
     this.getElement(element).type(value, { timeout: Cypress.env('global_timeout') });
   }
 
-  static async clickOnElement(element, index = undefined, force = false) {
+  static clickOnElement(element, index = undefined, force = false) {
     if (force === true) {
       return this.getElement(element, index).click({ force: true });
     }
@@ -74,9 +74,9 @@ export class BasePage {
     this.getElement(element).should('not.be.visible', { timeout: Cypress.env('global_timeout') });
   }
 
-  static async waitElementAndSelectOption(element, option) {
+  static waitElementAndSelectOption(element, option) {
     try {
-      return await this.getElement(element).should('be.visible').select(option);
+      return this.getElement(element).should('be.visible').select(option);
     } catch (error) {
       throw new Error(`element not be visible. ${error.message}`);
     }
