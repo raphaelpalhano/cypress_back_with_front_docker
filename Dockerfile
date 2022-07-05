@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 4000
 
-CMD ["npm", "run", "dev"]
+CMD ["node", "src/api/app.js"]
