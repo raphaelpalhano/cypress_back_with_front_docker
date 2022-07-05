@@ -41,10 +41,9 @@ build-job:       # This job runs in the build stage, which runs first.
 
 e2e-test-job:
   stage: test
-  before_script:
+  script:
     - docker pull $CONTAINER_TEST_IMAGE
     - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
-  script:
     - yarn run cy:run
 
 
