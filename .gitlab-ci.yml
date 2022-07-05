@@ -29,23 +29,24 @@ variables:
 
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  
+
 
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker push $CONTAINER_TEST_IMAGE
+    - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
   
 
 
 e2e-test-job:
+  image: node:16.15.1
   stage: test
   script:
-    - docker pull $CONTAINER_TEST_IMAGE
-    - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
-    - docker run yarn run cy:run
-    
+    - npm install
+    - npm run cy:run
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
