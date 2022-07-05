@@ -28,7 +28,6 @@ variables:
 
 
 before_script:
-  - npm install --global yarn
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 
@@ -45,7 +44,7 @@ e2e-test-job:
   script:
     - docker pull $CONTAINER_TEST_IMAGE
     - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
-    - yarn run cy:run
+    
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
