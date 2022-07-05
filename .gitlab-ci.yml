@@ -1,4 +1,4 @@
-image: node:16.5.1
+image: node:16.15.1
 
 
 stages:
