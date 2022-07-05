@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install --yes libgtk2.0-0 libgtk-3-0 libgbm-dev li
 
 COPY package*.json ./
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
