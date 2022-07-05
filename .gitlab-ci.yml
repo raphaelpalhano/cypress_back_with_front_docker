@@ -28,7 +28,7 @@ variables:
 
 
 before_script:
-  - yarn global add node-gyp
+  - npm install --global yarn
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 
