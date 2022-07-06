@@ -27,24 +27,29 @@ variables:
   PASSWORD: $PASSWORD
 
 
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
+    - echo $azure_auth >> .env
+    - echo $user_auth >> cypress.env.json  
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
+   
   
 
 
 e2e-test-job:
   stage: test
-  script:
-    - docker pull $CONTAINER_TEST_IMAGE
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
-    - yarn run cy:run
+  image: node:16.15.1
+  script:
+    - npm install
+    - npm run cy:run
+
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
