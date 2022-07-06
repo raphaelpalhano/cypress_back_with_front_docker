@@ -119,8 +119,6 @@ git push origin feature/...
 
 ## 1. Integration/spec/.feature:Gherkin
 
-<br>
-
 ### **Padrão do Gherkin**
 
   **Given**: Pré-condição, descreve o contexto inicial do cenário,
