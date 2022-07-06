@@ -1,7 +1,10 @@
-image: node:16.15.1
+image: docker:19.03.12
+services:
+  - docker:19.03.12-dind
 
 
 stages:
+  - build
   - test          
   - deploy
 
@@ -11,24 +14,28 @@ stages:
 #    - if: $CI_MERGE_REQUEST_APPROVED
 
 
-
-before_script:
-  - apt-get update && apt-get install --yes libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-  - echo "CLIENT_ID"=$CLIENT_ID >> .env 
-  - echo "TENANT_ID"=$TENANT_ID >> .env  
-  - echo "CLIENT_SECRET"=$CLIENT_SECRET >> .env 
-  - echo "REDIRECT_ROUTE"=$REDIRECT_ROUTE >> .env   
-  - echo "AUTHORITY"=$AUTHORITY >> .env
-  - echo "REDIRECT_ROUTE"=$REDIRECT_ROUTE >> .env
-  - echo $user_auth >> cypress.env.json  
-  - yarn install
-  - yarn run init:serv
-
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo $azure_auth >> .env
+    - echo $user_auth >> cypress.env.json  
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+   
+  
 
 
 e2e-test-job:
   stage: test
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
+  services:
+    - node:16.15.1
   script:
+    - apt-get update && apt-get install --yes libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+    - yarn install
     - yarn run cy:run
 
 
