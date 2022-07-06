@@ -12,20 +12,15 @@ stages:
 
 
 
-variables:
-  CLIENT_ID: $CLIENT_ID
-  TENANT_ID: $TENANT_ID
-  CLIENT_SECRET: $CLIENT_SECRET
-  REDIRECT_ROUTE: $REDIRECT_ROUTE
-  AUTHORITY: $AUTHORITY
-  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
-  USER: $USER
-  PASSWORD: $PASSWORD
-
-
 before_script:
   - apt-get update && apt-get install --yes libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+  - echo "CLIENT_ID"=$CLIENT_ID >> .env 
+  - echo "TENANT_ID"=$TENANT_ID >> .env  
+  - echo "CLIENT_SECRET"=$CLIENT_SECRET >> .env 
+  - echo "REDIRECT_ROUTE"=$REDIRECT_ROUTE >> .env   
+  - echo "AUTHORITY"=$AUTHORITY >> .env
+  - echo "REDIRECT_ROUTE"=$REDIRECT_ROUTE >> .env
+  - echo $user_auth >> cypress.env.json  
   - yarn install
   - yarn run init:serv
 
