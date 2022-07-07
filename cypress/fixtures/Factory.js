@@ -51,13 +51,7 @@ export class Factory {
         password: 'teste',
         administrador: 'true',
       };
-    case 'empty':
-      return {
-        nome: '',
-        email: '',
-        password: '',
-        administrador: admin.toString(),
-      };
+
     default:
       return { notfound: 'O usuário não foi encontrado, verifique o tipo passado!' };
     }
