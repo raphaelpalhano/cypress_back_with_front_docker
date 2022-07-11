@@ -24,13 +24,15 @@
         "cypress/no-pause": "error",
         "no-console": "off",
         "no-undef": "off",
+        "global-require": "off",
+        "import/extensions": "off",
         "import/prefer-default-export": "off",
         "no-array-constructor": "off",
         "default-param-last": "off",
         "max-len": [
           "error",
           {
-            "code": 130
+            "code": 140
           }
         ],
         "indent": [

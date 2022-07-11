@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  web:
+    image: registry.gitlab.com/igua_mule/igua-app/igua-login-unificado-ad/igua_authentication/web
+    build: ./
+    container_name: web
+    restart: always
+    ports:
+      - "4000:4000"
+
+  e2e:
+    image: registry.gitlab.com/igua_mule/igua-app/igua-login-unificado-ad/igua_authentication/cypress
+    build: ./e2e
+    container_name: cypress
+    depends_on:
+      - web
+    # note: inside e2e container, the network allows accessing
+    # "web" host under name "web"
+    # so "curl http://web" would return whatever the webserver
+    # in the "web" container is cooking
+    # see https://docs.docker.com/compose/networking/
+    environment:
+      - CYPRESS_baseUrl=http://web:4000
+    command: yarn cypress run
+    network_mode: "host"
+    volumes:
+      - ./e2e/cypress:/app/cypress
+      - ./e2e/cypress.config.js:/app/cypress.config.js
