@@ -1,47 +1,56 @@
-image: node:16.15.1
+image: docker/compose:latest
+services:
+  - name: docker:dind
+    alias: thedockerhost
+
+variables:
+  DOCKER_HOST: tcp://thedockerhost:2375/
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
 
 
 stages:
-   - test          
-   - build
-   - deploy
+  - build
+  - test          
+  - deploy
 
 
-unit-test-job:       # This job runs in the build stage, which runs first.
-  stage: test
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+
+workflow:
   rules:
-    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_MERGE_REQUEST_APPROVED
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
-    - node --version
-    - echo $KEY
+    - echo CLIENT_ID=$CLIENT_ID >> .env
+    - echo TENANT_ID=$TENANT_ID >> .env
+    - echo CLIENT_SECRET=$CLIENT_SECRET >> .env
+    - echo REDIRECT_ROUTE=$REDIRECT_ROUTE >> .env
+    - echo AUTHORITY=$AUTHORITY >> .env
+    - apk add --no-cache bash python3
+    - docker-compose build
+    - docker-compose push
 
 
 e2e-test-job:
   stage: test
-  rules:
-    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
-    - echo $CI_BUILD_REF_NAME
-    - echo $CI_OPEN_MERGE_REQUESTS
-
-
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  rules:
-    - if: '$CI_BUILD_REF_NAME == "develop" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
-  script:
-    - echo $CI_COMMIT_BRANCH
-    - echo $CI_PIPELINE_SOURCE
+    - docker-compose pull
+    - docker-compose up --abort-on-container-exit --exit-code-from e2e
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
   stage: deploy
   rules:
-    - if: '$CI_BUILD_REF_NAME == "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_COMMIT_REF_NAME == "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_MERGE_REQUEST_APPROVED
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
-    - node --version
+  when: on_success
 
