@@ -1,9 +1,14 @@
 const { defineConfig } = require('cypress');
+const dotenv = require('dotenv');
+
+dotenv.config({
+  path: process.env.NODE_ENV_TEST === 'develop' ? '.env.dev' : '.env',
+});
 
 module.exports = defineConfig({
   env: {
-   USER: "coca123",
-   PASSWORD: "COca1234."
+    USER: process.env.USER,
+    PASSWORD: process.env.PASSWORD,
   },
   reporter: 'junit',
   reporterOptions: {

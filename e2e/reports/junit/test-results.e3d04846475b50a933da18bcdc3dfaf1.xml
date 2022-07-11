@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="3.1590" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2022-07-07T20:12:20" tests="0" file="cypress/e2e/spec/Login_com_cpf.feature" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="Acessando o sistema de autenticação com CPF" timestamp="2022-07-07T20:12:20" tests="1" time="3.1590" failures="0">
-    <testcase name="Acessando o sistema de autenticação com CPF Autenticação com CPF válido" time="3.1590" classname="Autenticação com CPF válido">
-    </testcase>
-  </testsuite>
-</testsuites>
