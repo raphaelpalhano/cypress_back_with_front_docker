@@ -24,6 +24,7 @@ workflow:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: $CI_MERGE_REQUEST_APPROVED
 
+
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
@@ -32,6 +33,8 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo CLIENT_SECRET=$CLIENT_SECRET >> .env
     - echo REDIRECT_ROUTE=$REDIRECT_ROUTE >> .env
     - echo AUTHORITY=$AUTHORITY >> .env
+    - cd e2e && echo USER=$USER >> .env
+    - echo PASSWORD=$PASSWORD >> .env $$ cd ..
     - apk add --no-cache bash python3
     - docker-compose build
     - docker-compose push
@@ -42,6 +45,7 @@ e2e-test-job:
   script:
     - docker-compose pull
     - docker-compose up --abort-on-container-exit --exit-code-from e2e
+
 
 
 deploy-job:       # This job runs in the build stage, which runs first.

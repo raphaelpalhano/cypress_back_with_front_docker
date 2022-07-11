@@ -8,6 +8,7 @@
     ]
   },
   "include": [
-    "e2e/cypress/**/*.js"
+    "./node_modules/cypress",
+    "cypress/**/*.js"
   ]
 }
