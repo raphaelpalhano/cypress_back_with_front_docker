@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const msal = require('@azure/msal-node');
 
 dotenv.config({
   path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
@@ -6,23 +7,36 @@ dotenv.config({
 
 module.exports = {
   msalConfig: {
-    appCredentials: {
-      clientId: process.env.CLIENT_ID,
-      tenantId: process.env.TENANT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
+    auth: {
+      clientId: process.env.APP_CLIENT_ID,
+      authority: process.env.SIGN_UP_SIGN_IN_POLICY_AUTHORITY,
+      clientSecret: process.env.APP_CLIENT_SECRET,
+      knownAuthorities: [process.env.AUTHORITY_DOMAIN], // This must be an array
+      redirectUri: process.env.APP_REDIRECT_URI,
+      validateAuthority: false,
     },
-    authRoutes: {
-      redirect: process.env.REDIRECT_ROUTE,
-      error: '/error', // the wrapper will redirect to this route in case of any error
-      unauthorized: '/unauthorized', // the wrapper will redirect to this route in case of unauthorized access attempt
-    },
-    b2cPolicies: {
-      signUpSignIn: {
-        authority: process.env.AUTHORITY,
+    system: {
+      loggerOptions: {
+        loggerCallback(loglevel, message) {
+          console.log(message);
+        },
+        piiLoggingEnabled: false,
+        logLevel: msal.LogLevel.Verbose,
       },
     },
   },
   secure: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 4000,
   sessionSecret: 'ENTER_YOUR_SECRET_HERE',
+  authCodeRequest: {
+    redirectUri: process.env.APP_REDIRECT_URI,
+  },
+  tokenRequest: {
+    redirectUri: process.env.APP_REDIRECT_URI,
+  },
+  APP_STATES: {
+    LOGIN: 'login',
+    LOGOUT: 'logout',
+    PASSWORD_RESET: 'password_reset',
+  },
 };

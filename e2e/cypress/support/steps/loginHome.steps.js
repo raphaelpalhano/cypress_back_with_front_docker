@@ -10,8 +10,6 @@ When(`efetuo login com CPF {string}`, (option) => {
   LoginHome.makeLogin();
 });
 
-// Then('o usuario deve estar autenticado', () => {
-//   cy.origin('http://localhost:4000', () => {
-//     cy.visit('/home');
-//   });
-// });
+Then('o usuario deve estar autenticado', () => {
+  LoginHome.authValidation();
+});

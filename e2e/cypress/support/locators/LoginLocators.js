@@ -6,4 +6,8 @@ export class LoginLocator {
   static BUTTON(value) {
     return `button[id=${value}]`;
   }
+
+  static PRETEXT() {
+    return 'body pre';
+  }
 }
