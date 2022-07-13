@@ -15,5 +15,12 @@ export class LoginHome extends BasePage {
 
   static makeLogin() {
     super.clickOnElement(LoginLocator.BUTTON('next'));
+    cy.request('POST', '/signin').as('valid');
+  }
+
+  static authValidation() {
+    cy.get('@valid').then((response) => {
+      expect(response.status).to.be.equal(200);
+    });
   }
 }

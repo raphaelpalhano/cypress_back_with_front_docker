@@ -7,6 +7,6 @@ Before(() => {
 });
 
 After(() => {
-  cy.visit('/signout');
+  // cy.visit('/signout');
   cy.log('Finish feature');
 });
