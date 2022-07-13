@@ -9,7 +9,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-
+.env
 # OS
 .DS_Store
 
@@ -39,13 +39,15 @@ node_modules
 cypress.env.json
 
 #reports
-cypress/videos/spec/*.feature.mp4
-
-reports/html/assets
-reports/html/index.html
-reports/html/*.js
-reports/json/*.json
-reports/junit/*.xml
+e2e/cypress/videos/*
+!e2e/cypress/videos/*.txt
 
 
+e2e/reports/html/assets
+e2e/reports/html/index.html
+e2e/reports/html/features/*.html
+e2e/reports/html/*.js
+e2e/reports/json/*.json
+e2e/reports/junit/test-results.*.xml
+e2e/reports/screenshots/*.png
 

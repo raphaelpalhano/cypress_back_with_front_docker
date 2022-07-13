@@ -1,6 +1,12 @@
-image: docker:19.03.12
+image: docker/compose:latest
 services:
-  - docker:19.03.12-dind
+  - name: docker:dind
+    alias: thedockerhost
+
+variables:
+  DOCKER_HOST: tcp://thedockerhost:2375/
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
 
 
 stages:
@@ -8,47 +14,43 @@ stages:
   - test          
   - deploy
 
-#workflow:
-#  rules:
-#    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
-#    - if: $CI_MERGE_REQUEST_APPROVED
 
 
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
-variables:
-  CLIENT_ID: $CLIENT_ID
-  TENANT_ID: $TENANT_ID
-  CLIENT_SECRET: $CLIENT_SECRET
-  REDIRECT_ROUTE: $REDIRECT_ROUTE
-  AUTHORITY: $AUTHORITY
-  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
-  USER: $USER
-  PASSWORD: $PASSWORD
 
+workflow:
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_MERGE_REQUEST_APPROVED
 
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - echo $azure_auth >> .env
-    - echo $user_auth >> cypress.env.json  
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker push $CONTAINER_TEST_IMAGE
-   
-  
+    - echo SERVER_PORT=$SERVER_PORT >> .env
+    - echo APP_CLIENT_ID=$APP_CLIENT_ID >> .env
+    - echo SESSION_SECRET=$SESSION_SECRET >> .env
+    - echo APP_CLIENT_SECRET=$APP_CLIENT_SECRET >> .env
+    - echo SIGN_UP_SIGN_IN_POLICY_AUTHORITY=$SIGN_UP_SIGN_IN_POLICY_AUTHORITY >> .env
+    - echo RESET_PASSWORD_POLICY_AUTHORITY=$RESET_PASSWORD_POLICY_AUTHORITY >> .env
+    - echo AUTHORITY_DOMAIN=$AUTHORITY_DOMAIN >> .env
+    - echo APP_REDIRECT_URI=$APP_REDIRECT_URI >> .env
+    - echo LOGOUT_ENDPOINT=$LOGOUT_ENDPOINT >> .env
+    - cd e2e && echo USER_TEST_IGUA=$USER >> .env
+    - echo PASSWORD=$PASSWORD >> .env $$ cd ..
+    - apk add --no-cache bash python3
+    - docker-compose build
+    - docker-compose push
+
 
 
 e2e-test-job:
   stage: test
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker run -d -p 4000:4000 $CONTAINER_TEST_IMAGE
-  image: node:16.15.1
   script:
-    - npm install
-    - npm run cy:run
+    - docker-compose pull
+    - docker-compose up --abort-on-container-exit --exit-code-from e2e
 
 
 
@@ -60,6 +62,5 @@ deploy-job:       # This job runs in the build stage, which runs first.
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
-    - node --version
   when: on_success
 
