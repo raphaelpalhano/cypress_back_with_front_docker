@@ -50,4 +50,3 @@ e2e/reports/html/*.js
 e2e/reports/json/*.json
 e2e/reports/junit/test-results.*.xml
 e2e/cypress/screenshots/**/*.png
-

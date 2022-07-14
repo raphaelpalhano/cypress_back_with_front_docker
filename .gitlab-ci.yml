@@ -39,7 +39,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo APP_REDIRECT_URI=$APP_REDIRECT_URI >> .env
     - echo LOGOUT_ENDPOINT=$LOGOUT_ENDPOINT >> .env
     - cd e2e && echo USER_TEST_IGUA=$USER >> .env
-    - echo PASSWORD=$PASSWORD >> .env $$ cd ..
+    - echo PASSWORD_TEST_IGUA=$PASSWORD_TEST_IGUA >> .env $$ cd ..
     - apk add --no-cache bash python3
     - docker-compose build
     - docker-compose push
