@@ -14,14 +14,19 @@ export class LoginHome extends BasePage {
   }
 
   static makeLogin() {
-    super.clickOnElement(LoginLocator.BUTTON('next')).as('valid');
-    // cy.request('POST', '/signin').as('valid');
+    super.clickOnElement(LoginLocator.BUTTON('next')).then(() => {
+      super
+        .getElement(LoginLocator.PRETEXT())
+        .request('/signin')
+        .then((response) => {
+          cy.wrap(response).as('response');
+        });
+    });
   }
 
   static authValidation() {
-    cy.get('@valid').then((response) => {
-      // expect(response.status).to.be.equal(200);
-      console.log(response);
+    cy.get('@response').then((response) => {
+      expect(response.body.isAuthenticated).equal(true);
     });
   }
 }
