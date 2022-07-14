@@ -41,17 +41,17 @@ export class BasePage {
 
   static typeValue(element, value, force = false) {
     if (force === true) {
-      this.getElement(element).clear().type(value, { force: true }, { log: true });
+      this.getElement(element).clear().type(value, { force: true }, { log: false });
     } else {
-      this.getElement(element).clear().type(value, { log: true });
+      this.getElement(element).clear().type(value, { log: false });
     }
   }
 
   static typeValueXPath(element, value, force = false) {
     if (force === true) {
-      this.getElementByXPath(element).type(value, { force: true });
+      this.getElementByXPath(element).type(value, { force: true }, { log: false });
     } else {
-      this.getElementByXPath(element).type(value);
+      this.getElementByXPath(element).type(value, { log: false });
     }
   }
 
