@@ -9,7 +9,7 @@ Feature: Acessando o sistema de autenticação com CPF
         Given que acesso o sistema de autenticacao
 
 
-    @developed
+    @focus
     Scenario: Autenticação com CPF válido
         When efetuo login com CPF "valid"
         Then devo ser autenticado
