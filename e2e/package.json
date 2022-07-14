@@ -8,7 +8,7 @@
     "cy:firefox": "cypress run --browser firefox",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:developed": "npx cypress-tags run -e TAGS=@developed",
+    "cy:developed": "cypress run -e TAGS='@developed'",
     "cy:report": "node ./cypress/support/report/reporter.js",
     "cy:clear": "node ./cypress/support/report/clear.js",
     "lint": "eslint . --ext .js --fix",

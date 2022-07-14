@@ -13,9 +13,8 @@ Feature: Acessando o sistema de autenticação com CPF
     Scenario: Autenticação com CPF válido
         When efetuo login com CPF "valid"
         Then devo ser autenticado
-
-
-    Scenario: Autenticação com CPF válido
+    
+     Scenario: Autenticação com CPF válido
         When efetuo login com CPF "valido" 
         Then devo ser autenticado
 
