@@ -8,7 +8,7 @@
     "cy:firefox": "cypress run --browser firefox",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:run:developed": "cypress run --browser=chrome -e TAGS='@developed'",
+    "cy:run:developed": "cypress run -e TAGS='@developed'",
     "cy:open:developed": "cypress open -e TAGS='@developed'",
     "cy:report": "node ./cypress/support/report/reporter.js",
     "cy:clear": "node ./cypress/support/report/clear.js",
