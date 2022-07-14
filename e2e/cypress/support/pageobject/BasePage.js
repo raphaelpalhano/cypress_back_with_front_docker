@@ -41,9 +41,9 @@ export class BasePage {
 
   static typeValue(element, value, force = false) {
     if (force === true) {
-      this.getElement(element).clear().type(value, { force: true }, { log: false });
+      this.getElement(element).clear().type(value, { force: true }, { log: true });
     } else {
-      this.getElement(element).clear().type(value, { log: false });
+      this.getElement(element).clear().type(value, { log: true });
     }
   }
 
