@@ -14,6 +14,7 @@ function getConfigurationByFile(file) {
 
 module.exports = async (on, config) => {
   await addCucumberPreprocessorPlugin(on, config); // to allow json to be produced
+  require('cypress-failed-log/on')(on);
   on('file:preprocessor', createBundler({ plugins: [nodePolyfills(), createEsbuildPlugin(config)] }));
   // on('before:browser:launch', async (browser = {}, launchOptions) => {
   //   if (browser.family === 'chromium' && browser.name !== 'electron') {

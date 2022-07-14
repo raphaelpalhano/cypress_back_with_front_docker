@@ -492,7 +492,7 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
-chalk@^2.0.0:
+chalk@^2.0.0, chalk@^2.3.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -664,6 +664,14 @@ crypt@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
   integrity sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==
+
+cypress-failed-log@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/cypress-failed-log/-/cypress-failed-log-2.10.0.tgz#dbbe9b57a55a7a204b2f7898eb17a2b34253d4fd"
+  integrity sha512-v+GsOcpCAgj335zfDy9jDnaujH31SM/6pEQBp0dH0clbYu4NSXirLRXW9WoKhd0j70UrAA0hTLNbS2oTt1Y5kA==
+  dependencies:
+    debug "4.3.4"
+    logdown "3.3.1"
 
 cypress-localstorage-commands@^1.7.0:
   version "1.7.0"
@@ -1979,6 +1987,13 @@ log-update@^4.0.0:
     cli-cursor "^3.1.0"
     slice-ansi "^4.0.0"
     wrap-ansi "^6.2.0"
+
+logdown@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/logdown/-/logdown-3.3.1.tgz#836d5a195b5949c6db631ccc9fecce0492e01d10"
+  integrity sha512-pjX0vlIJsYQlgVzFba2amXI1wZZnhrEorL68MdLI7B0/sN1TNUozBNFaHfcPHMM3A+INZ0OXFDxtnoaEgOmGjQ==
+  dependencies:
+    chalk "^2.3.0"
 
 long@^4.0.0:
   version "4.0.0"
