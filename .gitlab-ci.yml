@@ -53,7 +53,7 @@ e2e-test-job:
     - docker-compose up --abort-on-container-exit --exit-code-from e2e
   artifacts:
     paths:
-      - /tmp/videos/*.mp4
+      - ./e2e/cypress/videos/*
     expire_in: 1 week
 
 
