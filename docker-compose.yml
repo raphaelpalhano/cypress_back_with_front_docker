@@ -21,3 +21,4 @@ services:
     volumes:
       - ./e2e/cypress:/app/cypress
       - ./e2e/cypress.config.js:/app/cypress.config.js
+      - /tmp/videos/:/app/cypress/videos/

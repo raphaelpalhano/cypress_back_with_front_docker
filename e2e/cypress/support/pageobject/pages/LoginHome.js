@@ -19,6 +19,7 @@ export class LoginHome extends BasePage {
         .getElement(LoginLocator.PRETEXT())
         .request('/signin')
         .then((response) => {
+          console.log(response);
           cy.wrap(response).as('response');
         });
     });
