@@ -35,6 +35,9 @@ Feature: Acessando o sistema de autenticação com CPF
         When efetuo login com CPF "password_invalid" 
         Then devo visualizar a mensagem "Documento ou senha invalido."
 
+    Scenario: Autenticação com conta não cadastrada
+        When efetuo login com CPF "user_invalid" 
+        Then devo visualizar a mensagem "Documento ou senha invalido."
 
 
     Scenario: Autenticação sem preencher o CPF
