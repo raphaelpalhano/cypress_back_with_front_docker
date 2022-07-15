@@ -17,8 +17,8 @@ services:
     environment:
       - CYPRESS_baseUrl=http://web:4000
     command: >
-        bash -c "yarn run cy:clear
-        yarn run cy:report
+        bash -c "yarn run cy:clear &&
+        yarn run cy:report &&
         yarn run cy:run:developed"
     network_mode: "host"
     volumes:
