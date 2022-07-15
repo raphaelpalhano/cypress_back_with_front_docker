@@ -1,4 +1,4 @@
-image: docker/compose:latest
+image: docker/compose:1.29.2
 services:
   - name: docker:dind
     alias: thedockerhost
@@ -15,15 +15,16 @@ stages:
   - deploy
 
 
-
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 
-#workflow:
-#  rules:
-#    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
-#    - if: $CI_MERGE_REQUEST_APPROVED
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_APPROVED
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release"'
 
 
 build-job:       # This job runs in the build stage, which runs first.
@@ -46,6 +47,7 @@ build-job:       # This job runs in the build stage, which runs first.
 
 
 
+
 e2e-test-job:
   stage: test
   script:
@@ -57,7 +59,7 @@ e2e-test-job:
       - e2e/cypress/videos/**/*.mp4
       - e2e/cypress/screenshots/**/*.png
     expire_in: 1 day
-
+    
 
 
 deploy-job:       # This job runs in the build stage, which runs first.
