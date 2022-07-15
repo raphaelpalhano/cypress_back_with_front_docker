@@ -11,42 +11,35 @@ Feature: Acessando o sistema de autenticação com CPF
 
     @developed
     Scenario: Autenticação com CPF válido
-        When efetuo login com CPF "valid"
-        Then devo ser autenticado
-    
-     Scenario: Autenticação com CPF válido
-        When efetuo login com CPF "valido" 
+        When efetuo login com CPF "CPF_valid"
         Then devo ser autenticado
 
 
-
+    @developed
     Scenario: Autenticação com CNPJ válido
-        When efetuo login com CPF "valido" 
+        When efetuo login com CPF "CNPJ_valid" 
         Then devo ser autenticado
 
 
     Scenario: Autenticação com CPF inválido
-        When efetuo login com CPF "invalido" 
+        When efetuo login com CPF "CPF_invalid" 
         Then devo visualizar a mensagem "CPF ou CNPJ Inválido"
-
 
 
     Scenario: Autenticação com CNPJ inválido
-        When efetuo login com CNPJ "invalido" 
+        When efetuo login com CNPJ "CNPJ_invalid" 
         Then devo visualizar a mensagem "CPF ou CNPJ Inválido"
+
+
+    Scenario: Autenticação com senha inválida
+        When efetuo login com CPF "password_invalid" 
+        Then devo visualizar a mensagem "Documento ou senha invalido."
 
 
 
     Scenario: Autenticação sem preencher o CPF
         When efetuo login com CPF "CPF_void" 
         Then devo visualizar a mensagem "CPF ou CNPJ Inválido"
-
-
-
-    Scenario: Autenticação com senha inválida
-        When efetuo login com CPF "password_invalido" 
-        Then devo visualizar a mensagem "Sua senha está incorreta."
-
 
 
     Scenario: Autenticação sem preencher o password

@@ -15,15 +15,19 @@ export class LoginHome extends BasePage {
   }
 
   static makeLogin() {
-    super.clickOnElement(LoginLocator.BUTTON('next'));
+    super.clickOnElement(LoginLocator.BUTTON('next')).then(() => {
+      super
+        .getElement(LoginLocator.PRETEXT())
+        .request('/signin')
+        .then((response) => {
+          cy.wrap(response).as('response');
+        });
+    });
   }
 
   static authValidation() {
-    super
-      .getElement(LoginLocator.PRETEXT())
-      .request('/signin')
-      .then((response) => {
-        expect(response.body.isAuthenticated).equal(true);
-      });
+    cy.get('@response').then((response) => {
+      expect(response.body.isAuthenticated).equal(true);
+    });
   }
 }
