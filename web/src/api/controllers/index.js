@@ -1,23 +1,17 @@
-/* eslint-disable consistent-return */
 const path = require('path');
 const express = require('express');
 
-// custom middleware to check auth state
-function isAuthenticated(req, res, next) {
-  if (!req.session.isAuthenticated) {
-    return res.redirect('/signin'); // redirect to sign-in route
-  }
-  next();
-}
 const router = express.Router();
 const auth = require('./auth');
 const home = require('./home');
 const user = require('./user');
+const admin = require('./admin');
 
 router.use(express.static(path.join(__dirname, '../../../public')));
 router.use(auth);
 router.use(home);
-router.use(isAuthenticated, user);
+router.use(user);
+router.use(admin);
 
 // another routes
 router.get('/', (req, res) => res.redirect('/home'));

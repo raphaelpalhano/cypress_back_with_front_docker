@@ -27,7 +27,7 @@ module.exports = {
   },
   secure: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 4000,
-  sessionSecret: 'ENTER_YOUR_SECRET_HERE',
+  sessionSecret: 'IGUAAPPWEB',
   authCodeRequest: {
     redirectUri: process.env.APP_REDIRECT_URI,
   },
