@@ -25,6 +25,4 @@ services:
       - ./e2e/cypress:/app/cypress
       - ./e2e/cypress.config.js:/app/cypress.config.js
       - ./e2e/cypress/videos/:/app/cypress/videos/
-      - ./e2e/reports/html/:/app/reports/html/
-      - ./e2e/reports/json/:/app/reports/json/
-      - ./e2e/reports/junit/:/app/reports/junit/
+      - ./e2e/cypress/reports/:/app/cypress/reports/
