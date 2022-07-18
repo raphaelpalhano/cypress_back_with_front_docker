@@ -110,3 +110,8 @@ git push origin feature/...
 
 4. Colocar alguém que não te ajudou a desenvolver a funcionalidade para aprovar
 
+
+# Executando pelo docker
+
+É possível rodar o projeto localmente rodando o script `runLocal.sh`
+

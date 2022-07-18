@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 const fs = require('fs-extra');
 const path = require('path');
 // For Cucumber Integration
