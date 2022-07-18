@@ -12,9 +12,12 @@ module.exports = defineConfig({
     USER_CNPJ: process.env.USER_TEST_CNPJ,
     PASSWORD_TEST2: process.env.PASSWORD_TEST_IGUA2,
   },
-  reporter: 'junit',
+  reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
-    mochaFile: './reports/junit/test-results.[hash].xml',
+    charts: true,
+    embeddedScreenshots: true,
+    reportDir: 'cypress/reports',
+    reportPageTitle: 'Igua report',
   },
   e2e: {
     video: true,

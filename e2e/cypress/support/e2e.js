@@ -17,4 +17,5 @@
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-require('cypress-failed-log');
+import 'cypress-failed-log';
+import 'cypress-mochawesome-reporter/register';

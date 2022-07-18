@@ -3,7 +3,8 @@
 import { Before, After } from '@badeball/cypress-cucumber-preprocessor';
 
 Before(() => {
-  cy.log('Start feature');
+  global.feature = window.testState.gherkinDocument.feature.name;
+  cy.log(`Iniciando a feature ${global.feature}`);
 });
 
 After(() => {

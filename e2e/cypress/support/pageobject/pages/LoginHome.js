@@ -6,6 +6,7 @@ export class LoginHome extends BasePage {
   static goTo(endpoint) {
     cy.visit(endpoint);
     super.getElement(LoginLocator.INPUT('UserId')).should('be.visible');
+    cy.log('Acessando o sistema');
   }
 
   static fillForm(option) {

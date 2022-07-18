@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 const fs = require('fs-extra');
 const path = require('path');
 // For Cucumber Integration
@@ -15,7 +14,9 @@ function getConfigurationByFile(file) {
 module.exports = async (on, config) => {
   await addCucumberPreprocessorPlugin(on, config); // to allow json to be produced
   require('cypress-failed-log/on')(on);
+  require('cypress-mochawesome-reporter/plugin')(on);
   on('file:preprocessor', createBundler({ plugins: [nodePolyfills(), createEsbuildPlugin(config)] }));
+
   const file = config.env.configFile || 'develop';
 
   return getConfigurationByFile(file);
