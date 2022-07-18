@@ -17,7 +17,6 @@ module.exports = async (on, config) => {
   require('cypress-failed-log/on')(on);
   require('cypress-mochawesome-reporter/plugin')(on);
   on('file:preprocessor', createBundler({ plugins: [nodePolyfills(), createEsbuildPlugin(config)] }));
-
   const file = config.env.configFile || 'develop';
 
   return getConfigurationByFile(file);

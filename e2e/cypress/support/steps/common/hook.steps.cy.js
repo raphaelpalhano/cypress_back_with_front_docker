@@ -8,5 +8,5 @@ Before(() => {
 });
 
 After(() => {
-  cy.log('Finish feature');
+  cy.log('Finalizando a feature');
 });
