@@ -55,22 +55,186 @@
     },
     "/signin": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "description": "Rota de signin. Náo acessivel via Swagger.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/password": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Rota de redefinição de senha. Náo acessivel via Swagger.",
         "parameters": [],
         "responses": {}
       }
     },
     "/signout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "description": "Rota de signout. Náo acessivel via Swagger.",
         "parameters": [],
         "responses": {}
       }
     },
+    "/redirect": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "error",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "error_description",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/home": {
       "get": {
-        "description": "",
+        "tags": [
+          "Home"
+        ],
+        "description": "Verifica se o usuário está autenticado.",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Usuário autenticado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "isAuthenticated": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Rertorna informações básicas de sessão do usuário autenticado.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Usuário autenticado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Daniel"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "daniel@mail.com"
+                    },
+                    "secondName": {
+                      "type": "string",
+                      "example": "Prokofiev"
+                    },
+                    "sub": {
+                      "type": "string",
+                      "example": "129fjs-fjskfjskfj-fjskfjskfj-fjskfjskfj"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Listar todos os usuários",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista de usuários",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Endpoint para criar um usuário.",
+        "parameters": [
+          {
+            "name": "newUser",
+            "in": "body",
+            "description": "Informações do usuário.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddUser"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -78,13 +242,319 @@
         }
       }
     },
-    "/user": {
+    "/admin/user/{id}": {
       "get": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "Admin"
+        ],
+        "description": "Endpoint para obter um usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do usuário."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Endpoint para atualizar um usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do usuário."
+          },
+          {
+            "name": "newUser",
+            "in": "body",
+            "description": "Informações do usuário.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddUser"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Endpoint para deletar um usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do usuário."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AddUser": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "accountEnabled": {
+              "type": "boolean",
+              "example": true
+            },
+            "city": {
+              "type": "string",
+              "example": "Seattle"
+            },
+            "country": {
+              "type": "string",
+              "example": "United States"
+            },
+            "department": {
+              "type": "string",
+              "example": "Sales & Marketing"
+            },
+            "displayName": {
+              "type": "string",
+              "example": "Melissa Darrow"
+            },
+            "givenName": {
+              "type": "string",
+              "example": "Melissa"
+            },
+            "jobTitle": {
+              "type": "string",
+              "example": "Marketing Director"
+            },
+            "mailNickname": {
+              "type": "string",
+              "example": "MelissaD"
+            },
+            "passwordPolicies": {
+              "type": "string",
+              "example": "DisablePasswordExpiration"
+            },
+            "passwordProfile": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "Ch@angeme!"
+                },
+                "forceChangePasswordNextSignIn": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            },
+            "officeLocation": {
+              "type": "string",
+              "example": "131/1105"
+            },
+            "postalCode": {
+              "type": "string",
+              "example": "98052"
+            },
+            "preferredLanguage": {
+              "type": "string",
+              "example": "en-US"
+            },
+            "state": {
+              "type": "string",
+              "example": "WA"
+            },
+            "streetAddress": {
+              "type": "string",
+              "example": "9256 Towne Center Dr., Suite 400"
+            },
+            "surname": {
+              "type": "string",
+              "example": "Darrow"
+            },
+            "mobilePhone": {
+              "type": "string",
+              "example": "+1 206 555 0110"
+            },
+            "usageLocation": {
+              "type": "string",
+              "example": "US"
+            },
+            "userPrincipalName": {
+              "type": "string",
+              "example": "MelissaD@{domain}"
+            }
+          }
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "@odata.context": {
+              "type": "string",
+              "example": "https://graph.microsoft.com/v1.0/$metadata#users/$entity"
+            },
+            "displayName": {
+              "type": "string",
+              "example": "Daniel Kohntopp"
+            },
+            "surname": {
+              "type": "string",
+              "example": "Kohntopp"
+            },
+            "givenName": {
+              "type": "string",
+              "example": "Daniel"
+            },
+            "id": {
+              "type": "string",
+              "example": "b158284aebf426bf"
+            },
+            "userPrincipalName": {
+              "type": "string",
+              "example": "danielkohntopp@gmail.com"
+            },
+            "businessPhones": {
+              "type": "array",
+              "example": [
+                "732-555-0110"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "jobTitle": {
+              "type": "string",
+              "example": "Software Engineer"
+            },
+            "mail": {
+              "type": "string",
+              "example": "daniel@gmail.com"
+            },
+            "mobilePhone": {
+              "type": "string",
+              "example": "+1 206 555 0110"
+            },
+            "officeLocation": {
+              "type": "string",
+              "example": "131/1105"
+            },
+            "preferredLanguage": {
+              "type": "string",
+              "example": "pt-BR"
+            }
+          }
+        }
+      }
+    },
+    "Users": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "@odata.context": {
+              "type": "string",
+              "example": "https://graph.microsoft.com/v1.0/$metadata#users"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "displayName": {
+                    "type": "string",
+                    "example": "Daniel Kohntopp"
+                  },
+                  "surname": {
+                    "type": "string",
+                    "example": "Kohntopp"
+                  },
+                  "givenName": {
+                    "type": "string",
+                    "example": "Daniel"
+                  },
+                  "id": {
+                    "type": "string",
+                    "example": "b158284aebf426bf"
+                  },
+                  "userPrincipalName": {
+                    "type": "string",
+                    "example": "danielkohntopp@gmail.com"
+                  },
+                  "businessPhones": {
+                    "type": "array",
+                    "example": [
+                      "732-555-0110"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "jobTitle": {
+                    "type": "string",
+                    "example": "Software Engineer"
+                  },
+                  "mail": {
+                    "type": "string",
+                    "example": "daniel@gmail.com"
+                  },
+                  "mobilePhone": {
+                    "type": "string",
+                    "example": "+1 206 555 0110"
+                  },
+                  "officeLocation": {
+                    "type": "string",
+                    "example": "131/1105"
+                  },
+                  "preferredLanguage": {
+                    "type": "string",
+                    "example": "pt-BR"
+                  }
+                }
+              }
+            }
           }
         }
       }
