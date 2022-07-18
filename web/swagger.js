@@ -1,7 +1,7 @@
 const swaggerAutogen = require('swagger-autogen');
 
-const outputFile = './swagger_output.json';
-const endpointsFiles = ['./src/api/app.js'];
+const outputFile = './web/swagger_output.json';
+const endpointsFiles = ['./web/src/api/app.js'];
 
 const doc = {
   info: {
@@ -26,6 +26,73 @@ const doc = {
       in: 'header', // can be "header", "query" or "cookie"
       name: 'X-API-KEY', // name of the header, query parameter or cookie
       description: 'any description...',
+    },
+  },
+  definitions: {
+    AddUser: {
+      type: 'object',
+      properties: {
+        accountEnabled: true,
+        city: 'Seattle',
+        country: 'United States',
+        department: 'Sales & Marketing',
+        displayName: 'Melissa Darrow',
+        givenName: 'Melissa',
+        jobTitle: 'Marketing Director',
+        mailNickname: 'MelissaD',
+        passwordPolicies: 'DisablePasswordExpiration',
+        passwordProfile: {
+          password: 'Ch@angeme!',
+          forceChangePasswordNextSignIn: false,
+        },
+        officeLocation: '131/1105',
+        postalCode: '98052',
+        preferredLanguage: 'en-US',
+        state: 'WA',
+        streetAddress: '9256 Towne Center Dr., Suite 400',
+        surname: 'Darrow',
+        mobilePhone: '+1 206 555 0110',
+        usageLocation: 'US',
+        userPrincipalName: 'MelissaD@{domain}',
+      },
+    },
+    User: {
+      type: 'object',
+      properties: {
+        '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#users/$entity',
+        displayName: 'Daniel Kohntopp',
+        surname: 'Kohntopp',
+        givenName: 'Daniel',
+        id: 'b158284aebf426bf',
+        userPrincipalName: 'danielkohntopp@gmail.com',
+        businessPhones: ['732-555-0110'],
+        jobTitle: 'Software Engineer',
+        mail: 'daniel@gmail.com',
+        mobilePhone: '+1 206 555 0110',
+        officeLocation: '131/1105',
+        preferredLanguage: 'pt-BR',
+      },
+    },
+    Users: {
+      type: 'object',
+      properties: {
+        '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#users',
+        value: [
+          {
+            displayName: 'Daniel Kohntopp',
+            surname: 'Kohntopp',
+            givenName: 'Daniel',
+            id: 'b158284aebf426bf',
+            userPrincipalName: 'danielkohntopp@gmail.com',
+            businessPhones: ['732-555-0110'],
+            jobTitle: 'Software Engineer',
+            mail: 'daniel@gmail.com',
+            mobilePhone: '+1 206 555 0110',
+            officeLocation: '131/1105',
+            preferredLanguage: 'pt-BR',
+          },
+        ],
+      },
     },
   },
 };
