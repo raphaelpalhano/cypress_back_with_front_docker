@@ -49,9 +49,9 @@ export class BasePage {
 
   static typeValueXPath(element, value, force = false) {
     if (force === true) {
-      this.getElementByXPath(element).type(value, { force: true });
+      this.getElementByXPath(element).type(value, { force: true }, { log: false });
     } else {
-      this.getElementByXPath(element).type(value);
+      this.getElementByXPath(element).type(value, { log: false });
     }
   }
 

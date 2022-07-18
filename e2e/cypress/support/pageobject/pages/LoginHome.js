@@ -5,6 +5,7 @@ import { BasePage } from '../BasePage';
 export class LoginHome extends BasePage {
   static goTo(endpoint) {
     cy.visit(endpoint);
+    super.getElement(LoginLocator.INPUT('UserId')).should('be.visible');
   }
 
   static fillForm(option) {
@@ -14,13 +15,19 @@ export class LoginHome extends BasePage {
   }
 
   static makeLogin() {
-    super.clickOnElement(LoginLocator.BUTTON('next'));
-    cy.request('POST', '/signin').as('valid');
+    super.clickOnElement(LoginLocator.BUTTON('next')).then(() => {
+      super
+        .getElement(LoginLocator.PRETEXT())
+        .request('/signin')
+        .then((response) => {
+          cy.wrap(response).as('response');
+        });
+    });
   }
 
   static authValidation() {
-    cy.get('@valid').then((response) => {
-      expect(response.status).to.be.equal(200);
+    cy.get('@response').then((response) => {
+      expect(response.body.isAuthenticated).equal(true);
     });
   }
 }
