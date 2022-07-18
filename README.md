@@ -113,5 +113,6 @@ git push origin feature/...
 
 # Executando pelo docker
 
-É possível rodar o projeto localmente rodando o script `./runLocal.sh`
+É possível rodar o projeto localmente rodando o script `./startLocal.sh`
+Para fazer o docker-compose down, rodar o script `./stopLocal.sh`
 
