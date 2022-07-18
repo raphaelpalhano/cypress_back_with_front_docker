@@ -10,8 +10,7 @@
     "cy:run": "cypress run",
     "cy:run:developed": "cypress run -e TAGS='@developed'",
     "cy:open:developed": "cypress open -e TAGS='@developed'",
-    "cy:report": "node ./cypress/support/report/reporter.js",
-    "cy:clear": "node ./cypress/support/report/clear.js"
+    "cy:clear": "node ./cypress/support/utils/clear.js"
   },
   "keywords": [],
   "author": "Raphael Angel",
