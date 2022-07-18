@@ -1,4 +1,4 @@
-import { Given, When } from 'cypress-cucumber-preprocessor/steps';
+import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 import { LoginHome } from '../pageobject/pages/LoginHome';
 
 Given('que acesso o sistema de autenticacao', () => {
@@ -10,6 +10,6 @@ When(`efetuo login com CPF {string}`, (option) => {
   LoginHome.makeLogin();
 });
 
-Then('o usuario deve estar autenticado', () => {
+Then('devo ser autenticado', () => {
   LoginHome.authValidation();
 });

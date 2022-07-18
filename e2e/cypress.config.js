@@ -7,8 +7,10 @@ dotenv.config({
 
 module.exports = defineConfig({
   env: {
-    USER: process.env.USER_TEST_IGUA,
-    PASSWORD: process.env.PASSWORD,
+    USER_CPF: process.env.USER_TEST_CPF,
+    PASSWORD_TEST1: process.env.PASSWORD_TEST_IGUA1,
+    USER_CNPJ: process.env.USER_TEST_CNPJ,
+    PASSWORD_TEST2: process.env.PASSWORD_TEST_IGUA2,
   },
   reporter: 'junit',
   reporterOptions: {

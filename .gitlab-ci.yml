@@ -1,4 +1,4 @@
-image: docker/compose:latest
+image: docker/compose:1.29.2
 services:
   - name: docker:dind
     alias: thedockerhost
@@ -21,8 +21,10 @@ before_script:
 
 workflow:
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: $CI_MERGE_REQUEST_APPROVED
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release"'
 
 
 build-job:       # This job runs in the build stage, which runs first.
@@ -37,11 +39,13 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo AUTHORITY_DOMAIN=$AUTHORITY_DOMAIN >> .env
     - echo APP_REDIRECT_URI=$APP_REDIRECT_URI >> .env
     - echo LOGOUT_ENDPOINT=$LOGOUT_ENDPOINT >> .env
-    - cd e2e && echo USER_TEST_IGUA=$USER >> .env
-    - echo PASSWORD=$PASSWORD >> .env $$ cd ..
+    - cd e2e && echo USER_TEST_CPF=$USER_TEST_CPF >> .env && echo PASSWORD_TEST_IGUA1=$PASSWORD_TEST_IGUA1 >> .env
+    - echo USER_TEST_CNPJ=$USER_TEST_CNPJ >> .env &&  echo PASSWORD_TEST_IGUA2=$PASSWORD_TEST_IGUA2 >> .env && cd ..
     - apk add --no-cache bash python3
     - docker-compose build
     - docker-compose push
+
+
 
 
 e2e-test-job:
@@ -49,7 +53,14 @@ e2e-test-job:
   script:
     - docker-compose pull
     - docker-compose up --abort-on-container-exit --exit-code-from e2e
-
+  artifacts:
+    when: always
+    paths:
+      - e2e/cypress/videos/**/*.mp4
+      - e2e/cypress/screenshots/**/*.png
+      - e2e/reports/*
+    expire_in: 1 day
+    
 
 
 deploy-job:       # This job runs in the build stage, which runs first.

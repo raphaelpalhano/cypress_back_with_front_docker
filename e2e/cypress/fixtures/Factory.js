@@ -3,24 +3,29 @@ import faker from 'faker-br';
 export class Factory {
   static getUserToLogin(loginType) {
     switch (loginType) {
-    case 'admin':
+    case 'CNPJ_valid':
       return {
-        user: Cypress.env('USER'),
-        password: Cypress.env('PASSWORD'),
+        user: Cypress.env('USER_CNPJ'),
+        password: Cypress.env('PASSWORD_TEST2'),
       };
-    case 'valid':
+    case 'CPF_valid':
       return {
-        user: Cypress.env('USER'),
-        password: Cypress.env('PASSWORD'),
+        user: Cypress.env('USER_CPF'),
+        password: Cypress.env('PASSWORD_TEST1'),
       };
     case 'empty':
       return {
         email: '',
         password: '',
       };
-    case 'invalid':
+    case 'CPF_invalid':
       return {
-        email: faker.internet.email(),
+        email: faker.br.cpf(),
+        password: faker.internet.password(),
+      };
+    case 'CNPJ_invalid':
+      return {
+        email: faker.br.cnpj(),
         password: faker.internet.password(),
       };
     default:
@@ -51,13 +56,7 @@ export class Factory {
         password: 'teste',
         administrador: 'true',
       };
-    case 'empty':
-      return {
-        nome: '',
-        email: '',
-        password: '',
-        administrador: admin.toString(),
-      };
+
     default:
       return { notfound: 'O usuário não foi encontrado, verifique o tipo passado!' };
     }

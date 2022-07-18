@@ -1,12 +1,11 @@
 /// <reference types="cypress" />
 
-import { Before, After } from 'cypress-cucumber-preprocessor/steps';
+import { Before, After } from '@badeball/cypress-cucumber-preprocessor';
 
 Before(() => {
   cy.log('Start feature');
 });
 
 After(() => {
-  // cy.visit('/signout');
   cy.log('Finish feature');
 });
