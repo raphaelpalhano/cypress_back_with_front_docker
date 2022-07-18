@@ -7,29 +7,16 @@ variables:
   DOCKER_HOST: tcp://thedockerhost:2375/
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
+  BUILD_NUMBER: $CI_PIPELINE_IID
 
-
-stages:
-  - build
-  - test          
-  - deploy
-
-
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-
-
-workflow:
+.regular_rules: &regular_rules
   rules:
     - if: $CI_MERGE_REQUEST_APPROVED
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: never
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release"'
 
-
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  script:
+.build_script_template: &build_script
     - echo SERVER_PORT=$SERVER_PORT >> .env
     - echo APP_CLIENT_ID=$APP_CLIENT_ID >> .env
     - echo SESSION_SECRET=$SESSION_SECRET >> .env
@@ -43,13 +30,36 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo USER_TEST_CNPJ=$USER_TEST_CNPJ >> .env &&  echo PASSWORD_TEST_IGUA2=$PASSWORD_TEST_IGUA2 >> .env && cd ..
     - apk add --no-cache bash python3
     - docker-compose build
+
+stages:
+  - build&test
+  - build
+  - delivery
+  - test          
+  - deploy
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+
+build-test-job:  # This job ONLY runs on merge requests
+  stage: build&test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  script: 
+    - *build_script
+    - docker-compose up --abort-on-container-exit --exit-code-from e2e
+
+build:       # This job runs in the build stage, which runs first.
+  stage: build
+  <<: *regular_rules
+  script:
+    - *build_script
     - docker-compose push
-
-
-
 
 e2e-test-job:
   stage: test
+  <<: *regular_rules
   script:
     - docker-compose pull
     - docker-compose up --abort-on-container-exit --exit-code-from e2e
@@ -61,15 +71,10 @@ e2e-test-job:
       - e2e/reports/*
     expire_in: 1 day
     
-
-
 deploy-job:       # This job runs in the build stage, which runs first.
   stage: deploy
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_COMMIT_REF_NAME == "release" && $CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: $CI_MERGE_REQUEST_APPROVED
+  <<: *regular_rules
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
   when: on_success
-

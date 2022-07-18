@@ -110,3 +110,262 @@ git push origin feature/...
 
 4. Colocar alguém que não te ajudou a desenvolver a funcionalidade para aprovar
 
+# Estrutura do framework cypress
+
+<p >
+    <img src="flows/flow_frontend.drawio.png" alt="imagem nao existe">
+ </p>
+
+
+## 1. Integration/spec/.feature:Gherkin
+
+### **Padrão do Gherkin**
+
+  **Given**: Pré-condição, descreve o contexto inicial do cenário,
+    para introduzir as ações do cenário.
+  O Given não é utilizado para executar ações, apenas colocar em
+  um estado conhecido do sistema.
+
+  **Exemplo**
+  ~~~gherkin
+    Scenario Outline: Filtrar produtos no painel de produtos
+      Given efetue login com "standard_user"
+  ~~~
+
+  **When**: Etapa do cenário que descreve um evento ou ação. Podendo
+  ser uma interação com elemento do sistema, ou um evento acionado
+  poro outro sistema.
+
+  **Exemplo**
+
+~~~gherkin
+  When filtrar os produtos por "<filtro>"
+~~~
+
+  **And**: Maneira para substituir o When, o Given, quando estes tiverem repetições. É para tornar o cenário mais fluído com a substituição de repetição de outros passos.
+
+  **Exemplo**
+
+~~~gherkin
+When filtrar os produtos por "<filtro>"
+And selecionar o filtro de ordenação
+~~~
+
+  **Then**: Utilizado para descrever o resultado esperado do cenário.
+  A escrita do Then deve ser como uma afirmação para comparar o resultado,
+  real, *que o sistema gerou*, com o resultado esperado *que deveria gerar*.
+  *Um resultado deve ser uma saída observável . Ou seja, algo que vem de fora do sistema (relatório, interface de usuário, a mensagem)*
+
+  **Exemplo**
+
+~~~gherkin
+    Then deve exibir o produto com nome "Bolsa Av" e preço "R$ 54.55"
+~~~
+<br>
+
+**background**: O background é a maneira de contextualizar os cenários. Se você observou que há muita repetição de algum step,
+ o background pode ser útil, para introduzir o contexto ao cenário. 
+
+
+
+  **Exemplo**
+
+~~~gherkin
+      Background: Iniciar na página de exemplo
+        Given o acesso a plataforma
+
+~~~
+<br>
+
+
+**Case de uma loja**
+
+~~~gherkin
+  Feature: Filtrar produtos pelo nome e preços
+
+    Background: Iniciar na página de exemplo
+      Given o acesso a plataforma
+
+     @test
+    Scenario Outline: Filtrar produtos no painel de produtos
+      Given efetue login com "standard_user"
+      When filtrar os produtos por "Maior preço"
+      And selecionar o filtro de ordenação
+      Then deve exibir o produto com nome "Bolsa Av" e preço "R$ 54.55"
+~~~
+
+<br>
+
+
+ ## 2. steps
+
+<br>
+
+ * **arquivo com extensão Step**:
+    - é o padrão para o cypress consiga monitorar esse arquivo
+      se o nome da pasta é steps, o arquivo deve ter steps também.
+    - Cada arquivo steps está integrado ao pageObject: loginSteps; panelSteps
+
+<br>
+
+
+**Padronização:**
+
+<br>
+
+
+`Aspas duplas:` para textos com parâmetros
+`Aspas simples:` textos sem parâmetro
+
+~~~javascript
+import
+import {Before, Given, And} from 'cypress-cucumber-preprocessor/steps'
+import {LoginPage} from '../pageObject/pages/LoginPage'
+
+
+Given(`o acesso a plataforma`, () => {
+	LoginPage.acessar_sauce_demo();
+
+});
+
+~~~
+
+  * **common**:
+    - hook para controlar as condições que ocorrem antes e depois de cada test
+
+<br>
+
+
+## 3. components
+
+* **componentes**:
+    - todos os seletores por meio de classes
+    - Cada classe representa a relação de elementos de uma página
+
+**LoginElement**
+
+~~~javascript
+  export class LoginElement{
+
+    static input = (campValue) => `[data-test=${campValue}]`
+
+}
+~~~
+
+<br>
+
+
+## 4. pageObject
+
+* **pages**:
+  - representa o comportamento de cada página
+  - cada arquivo representa uma classe da página
+
+**LoginPage.js**
+~~~javascript
+import BasePage from './BasePage'
+import {LoginElement} from '../components/LoginElement'
+
+export class LoginPage extends BasePage{
+
+    static acessar_sauce_demo(){
+        cy.visit('/')
+    }
+
+}
+~~~
+
+<br>
+
+
+## 5. utils
+  * **utils**
+    - Parte separada para criar libs, um arquivo uma responsabilidade.
+
+<br>
+
+
+# Configuração inicial
+
+
+<br>
+
+
+
+## 1. VSC
+  **Plugins**
+  * EditorConfig for VS Code
+  * ESLint
+  * Draw.io Integration
+  * Cucumber (Gherkin)
+
+<br>
+
+
+## 2. instalações
+
+ * yarn i 
+ * yarn i --production
+
+<br>
+
+
+## 3. Verificação do ambiente
+  * Criar um arquivo ou mudar a url do cypress/config/*.json
+  * Coloco o nome do arquivo em cypress/plugin/index.js {module.exports --> file}
+
+<br>
+
+# Instalação e execução
+
+  * Rodar em modo headless: `yarn cy:run`
+  * Rodar em tela gráfica: `yarn cy:open`
+  * Gerar o report HTML(sempre após rodar o cypress): `yarn run cy:report`
+  * Limpar os reports: `yarn run cy:clean`
+
+<br>
+
+# Dependências:
+
+  * [**Cypress**](https://www.cypress.io/)
+  * [**Cypress-cucumber-preprocessor**](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor)
+  * [**Fs-extra**](https://www.npmjs.com/package/fs-extra)
+  * [**Rimraf**](https://www.npmjs.com/package/rimraf)
+  * [**Multiple-cucumber-html-reporter**](https://www.npmjs.com/package/multiple-cucumber-html-reporter)
+  * [**Faker-br**](https://www.npmjs.com/package/faker-br)
+
+
+
+<br>
+
+
+
+# Como rodar o projeto pelo docker:
+
+  * docker build -t <nome_da_imagem> .
+  * Shell: docker container run --rm -it -e tags=@tag -v %cd%:/usr/src/e2e <nome_da_imagem>
+  * Powershell: docker run -i -v "%cd%":/usr/src/e2e -t <nome_da_imagem> --spec cypress/integration/spec/*.feature
+  * `O comando acima não funciona no Powershell devido aos dois pontos após %cd%`
+
+  * [**Command**]: **yarn i --save-dev {package}**
+
+  Também é possível rodar o projeto localmente rodando o script `runLocal.sh`
+
+# Configuração do steps do cucumber
+
+<br>
+
+ * package.json
+ ~~~json
+ "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": false,
+    "step_definitions": "cypress/steps",
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "reports/json"
+    }
+  }
+ ~~~
+ **ponto importante**:
+ - "step_definitions": esse atributo irá definir onde estão os steps do projeto, que executam o arquivo em gherkin.
+ - se você colocou o nome da pasta steps, os arquivos dentro dela terão que terminar com o {nome-do-arquivo}steps.js

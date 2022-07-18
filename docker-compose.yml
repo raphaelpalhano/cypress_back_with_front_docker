@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    image: registry.gitlab.com/igua_mule/igua-app/igua-login-unificado-ad/igua_authentication/web
+    image: "registry.gitlab.com/igua_mule/igua-app/igua-login-unificado-ad/igua_authentication/web:${BUILD_NUMBER}"
     build: ./
     container_name: web
     restart: always
@@ -9,7 +9,7 @@ services:
       - "4000:4000"
 
   e2e:
-    image: registry.gitlab.com/igua_mule/igua-app/igua-login-unificado-ad/igua_authentication/cypress
+    image: "registry.gitlab.com/igua_mule/igua-app/igua-login-unificado-ad/igua_authentication/cypress:${BUILD_NUMBER}"
     build: ./e2e
     container_name: cypress
     depends_on:
