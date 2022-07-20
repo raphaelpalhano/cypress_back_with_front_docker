@@ -17,6 +17,11 @@ variables:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release"'
 
 .build_script_template: &build_script
+    - echo CLIENT_ID=$CLIENT_ID >> .env
+    - echo TENANT_ID=$TENANT_ID >> .env
+    - echo CLIENT_SECRET=$CLIENT_SECRET >> .env
+    - echo REDIRECT_ROUTE=$REDIRECT_ROUTE >> .env
+    - echo AUTHORITY=$AUTHORITY >> .env
     - echo SERVER_PORT=$SERVER_PORT >> .env
     - echo APP_CLIENT_ID=$APP_CLIENT_ID >> .env
     - echo SESSION_SECRET=$SESSION_SECRET >> .env
@@ -26,7 +31,6 @@ variables:
     - echo AUTHORITY_DOMAIN=$AUTHORITY_DOMAIN >> .env
     - echo APP_REDIRECT_URI=$APP_REDIRECT_URI >> .env
     - echo LOGOUT_ENDPOINT=$LOGOUT_ENDPOINT >> .env
-    - echo TENANT_ID=$TENANT_ID >> .env
     - echo GRAPH_ENDPOINT=$GRAPH_ENDPOINT >> .env
     - echo GRAPH_SCOPE=$GRAPH_SCOPE >> .env
     - cd e2e && echo USER_TEST_CPF=$USER_TEST_CPF >> .env && echo PASSWORD_TEST_IGUA1=$PASSWORD_TEST_IGUA1 >> .env

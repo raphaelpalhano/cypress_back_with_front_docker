@@ -43,10 +43,17 @@ e2e/cypress/videos/*
 !e2e/cypress/videos/*.txt
 
 
+#reports e2e
 e2e/reports/html/assets
 e2e/reports/html/index.html
 e2e/reports/html/features/*.html
 e2e/cypress/reports/*.html
 e2e/cypress/reports/assets
 e2e/cypress/screenshots
+
+
+#reports web
+web/reports/*.json
+web/reports/*.html
+
 

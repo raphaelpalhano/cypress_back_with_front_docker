@@ -1,4 +1,4 @@
-import { Factory } from '../../../fixtures/Factory';
+import { Factory } from '../../../../fixtures/frontend/Factory';
 import { LoginLocator } from '../../locators/LoginLocators';
 import { BasePage } from '../BasePage';
 
