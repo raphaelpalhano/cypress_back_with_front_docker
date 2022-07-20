@@ -35,4 +35,3 @@ app.use(router);
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Msal Node Auth Code Sample app listening on port !${process.env.SERVER_PORT}`);
 });
-
