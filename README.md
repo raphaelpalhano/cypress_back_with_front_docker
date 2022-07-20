@@ -30,10 +30,10 @@ Após clonar o projeto, para instalar os módulos externos execute o comando:
 
 ao término, é necessário criar um arquivo com o nome `.env` na raiz do projeto contendo as seguintes chaves obtidas no Azure Ad B2C:
 
-    CLIENT_ID
+    APP_CLIENT_ID
     TENANT_ID
-    CLIENT_SECRET
-    REDIRECT_ROUTE
+    APP_CLIENT_SECRET
+    APP_REDIRECT_URI
     AUTHORITY
 
 Feito isso, o projeto já pode ser dado *start* com o comando `yarn dev` que fará com que o *nodemon* escute na porta selecionada para cada mudança feita em código sem que precise *restartar* o server novamente. 

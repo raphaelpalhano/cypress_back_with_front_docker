@@ -26,6 +26,9 @@ variables:
     - echo AUTHORITY_DOMAIN=$AUTHORITY_DOMAIN >> .env
     - echo APP_REDIRECT_URI=$APP_REDIRECT_URI >> .env
     - echo LOGOUT_ENDPOINT=$LOGOUT_ENDPOINT >> .env
+    - echo TENANT_ID=$TENANT_ID >> .env
+    - echo GRAPH_ENDPOINT=$GRAPH_ENDPOINT >> .env
+    - echo GRAPH_SCOPE=$GRAPH_SCOPE >> .env
     - cd e2e && echo USER_TEST_CPF=$USER_TEST_CPF >> .env && echo PASSWORD_TEST_IGUA1=$PASSWORD_TEST_IGUA1 >> .env
     - echo USER_TEST_CNPJ=$USER_TEST_CNPJ >> .env &&  echo PASSWORD_TEST_IGUA2=$PASSWORD_TEST_IGUA2 >> .env && cd ..
     - apk add --no-cache bash python3

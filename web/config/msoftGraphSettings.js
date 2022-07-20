@@ -6,8 +6,8 @@ dotenv.config({
 
 module.exports = {
   tenantId: process.env.TENANT_ID,
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
+  clientId: process.env.APP_CLIENT_ID,
+  clientSecret: process.env.APP_CLIENT_SECRET,
   graphScope: process.env.GRAPH_SCOPE,
   graphEndpoint: process.env.GRAPH_ENDPOINT,
 };
