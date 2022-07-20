@@ -13,6 +13,22 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
+// Import plugins
 import 'cypress-failed-log';
 import 'cypress-mochawesome-reporter/register';
+
+// utils backend
+import './backend/commands/utils/schema.validation';
+import './backend/commands/utils/request.service';
+
+// service-commom
+import './backend/commands/services/common/rest.service';
+
+// service-specific
+import './backend/commands/services/research_users.service';
+
+Cypress.Server.defaults({
+  delay: 500,
+  force404: false,
+  whitelist: () => true,
+});

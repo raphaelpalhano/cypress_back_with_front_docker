@@ -22,6 +22,9 @@
         "cypress/no-force": "warn",
         "cypress/no-async-tests": "error",
         "cypress/no-pause": "error",
+        "no-restricted-syntax": "off",
+        "guard-for-in": "off",
+        "no-param-reassign": "off",
         "no-console": "off",
         "no-undef": "off",
         "global-require": "off",
@@ -32,7 +35,7 @@
         "max-len": [
           "error",
           {
-            "code": 140
+            "code": 150
           }
         ],
         "indent": [
