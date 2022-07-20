@@ -41,9 +41,10 @@ const msoftGraph = async (method, url, data = {}, params = {}) => {
     },
   })
     .then((response) => response.data)
-    .catch((error) => {
-      throw new Error(error);
-    });
+    .catch((error) => ({
+      status: error.response.status,
+      data: error.response.data,
+    }));
   return res;
 };
 
