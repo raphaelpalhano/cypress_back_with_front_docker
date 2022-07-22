@@ -40,11 +40,15 @@ const msoftGraph = async (method, url, data = {}, params = {}) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data)
+    .then((response) => ({
+      status: response.status,
+      data: response.data,
+    }))
     .catch((error) => ({
       status: error.response.status,
       data: error.response.data,
     }));
+
   return res;
 };
 
