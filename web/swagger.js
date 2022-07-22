@@ -53,7 +53,13 @@ const doc = {
         surname: 'Darrow',
         mobilePhone: '+1 206 555 0110',
         usageLocation: 'US',
-        userPrincipalName: 'MelissaD@{domain}',
+        identities: [
+          {
+            signinType: 'userName',
+            issuer: 'iguateste.onmicrosoft.com',
+            issuerAssignedId: '07027495910',
+          },
+        ],
       },
     },
     User: {
