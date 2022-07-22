@@ -409,9 +409,25 @@
               "type": "string",
               "example": "US"
             },
-            "userPrincipalName": {
-              "type": "string",
-              "example": "MelissaD@{domain}"
+            "identities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "signinType": {
+                    "type": "string",
+                    "example": "userName"
+                  },
+                  "issuer": {
+                    "type": "string",
+                    "example": "iguateste.onmicrosoft.com"
+                  },
+                  "issuerAssignedId": {
+                    "type": "string",
+                    "example": "07027495910"
+                  }
+                }
+              }
             }
           }
         }

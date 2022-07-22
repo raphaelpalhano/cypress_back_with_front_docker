@@ -7,6 +7,7 @@
     "prestart": "node web/swagger.js",
     "start": "NODE_ENV=production node web/src/api/app.js",
     "init:serv": "node web/src/api/app.js",
+    "predev": "node web/swagger.js",
     "dev": "nodemon web/src/api/app.js",
     "test": "jest --forceExit",
     "prettier-format": "prettier --config .prettierrc '**/*.js' --write",
