@@ -37,7 +37,7 @@ const msoftGraph = async (method, url, data = {}, params = {}) => {
     headers: {
       Authorization,
       accept: 'application/json',
-      'Content-Type': 'multipart/form-data, application/json',
+      'Content-Type': 'application/json',
     },
   })
     .then((response) => response.data)
