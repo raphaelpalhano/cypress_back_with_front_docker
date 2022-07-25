@@ -3,9 +3,9 @@ import { And, Then } from '@badeball/cypress-cucumber-preprocessor';
 Then('o response deve ter o schema {string} com a requisicao {string}', (service, request) => {
   /**
    * PT-BR:
-   * O parâmetro 'status' é o nome do arquivo json que armazena o schema da requisição.
-   * O parâmetro 'schema' é a pasta onde deve ser armazenado o schema.
-   * Por exemplo: schema/status == get-user/200.json || post-user/400.json
+   * O parâmetro 'service' é o nome da pasta que armazena o arquivo json da requisição.
+   * O parâmetro 'request' é o arquivo json da requisição.
+   * Por exemplo: getUsers/getAllUsers.json =
    */
 
   cy.get('@Response').then((res) => {
@@ -19,8 +19,8 @@ Then('o response deve ter o schema {string} com a requisicao {string}', (service
   });
 });
 
-And('deve retornar o statuscode {int}', () => {
+And('deve retornar o statuscode {int}', (statuscode) => {
   cy.get('@Response').then((res) => {
-    expect(res.status).to.eq(200);
+    expect(res.body.status).to.eq(statuscode);
   });
 });
