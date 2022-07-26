@@ -48,7 +48,11 @@ router.get('/redirect', (req, res) => {
         });
       })
       .catch((error) => {
-        throw new Error(error);
+        if (error.errorCode === 'request_cannot_be_made') {
+          res.redirect('/signin');
+        } else {
+          res.status(500).send('We do not recognize this response!');
+        }
       });
   } else if (req.query.state === appSettings.APP_STATES.PASSWORD_RESET) {
     // If the query string has a error param
