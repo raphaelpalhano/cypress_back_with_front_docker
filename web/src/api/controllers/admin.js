@@ -57,7 +57,8 @@ router.patch('/admin/user/:id', async (req, res) => {
                schema: { $ref: "#/definitions/AddUser" }
         } */
 
-  const data = req.body;
+  const data = req.body || {};
+  const { id } = req.params;
   const users = await msoftGraph('patch', `/users/${id}`, data);
   return res.send(users);
 });
