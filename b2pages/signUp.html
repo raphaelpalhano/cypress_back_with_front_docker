@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Detalhes do usuário</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <style id="common">
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url(https://iguateste.b2clogin.com/static/tenant/templates/fonts/segoeui.WOFF);
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url(https://iguateste.b2clogin.com/static/tenant/templates/fonts/segoeui_bold.WOFF);
+            font-weight: bold;
+        }
+
+        #AmazonExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/amazon.svg);
+        }
+
+        #AmazonExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/amazon.svg);
+        }
+
+        #FacebookExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/facebook.svg);
+        }
+
+        #FacebookExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/facebook.svg);
+        }
+
+        #GitHubExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/github.svg);
+        }
+
+        #GitHubExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/github.svg);
+        }
+
+        #AppleExchange,
+        #AppleManagedExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/apple.svg);
+        }
+
+        #AppleExchange:hover,
+        #AppleManagedExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/apple.svg);
+        }
+
+        #GoogleExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/google.svg);
+        }
+
+        #GoogleExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/google.svg);
+        }
+
+        #LinkedInExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/linkedin.svg);
+        }
+
+        #LinkedInExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/linkedin.svg);
+        }
+
+        #MicrosoftAccountExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/microsoft.svg);
+        }
+
+        #MicrosoftAccountExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/microsoft.svg);
+        }
+
+        #QQExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/qq.svg);
+        }
+
+        #QQExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/qq.svg);
+        }
+
+        #TwitterExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/twitter.svg);
+        }
+
+        #TwitterExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/twitter.svg);
+        }
+
+        #WeChatExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/wechat.svg);
+        }
+
+        #WeChatExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/wechat.svg);
+        }
+
+        #WeiboExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/weibo.svg);
+        }
+
+        #WeiboExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/weibo.svg);
+        }
+
+        .buttons #cancel:before {
+            content: url(https://iguateste.b2clogin.com/static/tenant/templates/images/left-arrow.svg);
+        }
+    </style>
+    <style id="idpselector">
+        #SignInWithLogonNameExchange,
+        #SignUpWithLogonEmailExchange,
+        #SignUpWithLogonNameExchange {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/colored/local.svg);
+        }
+
+        #SignInWithLogonNameExchange:hover,
+        #SignUpWithLogonEmailExchange:hover,
+        #SignUpWithLogonNameExchange:hover {
+            background-image: url(https://iguateste.b2clogin.com/static/tenant/templates/idp_logos/white/local.svg);
+        }
+
+        #SignUpWithLogonEmailExchange.text-link {
+            background-image: none;
+            background-color: transparent !important;
+        }
+
+        #SignUpWithLogonEmailExchange.text-link:hover {
+            background-image: none;
+            background-color: transparent !important;
+        }
+    </style>
+
+
+
+<body data-new-gr-c-s-check-loaded="14.1070.0" data-gr-ext-installed=""><noscript>
+        <div id="no_js">
+            <div class="error_container">
+                <div>
+                    <h1>We can't sign you in</h1>
+                    <p>Your browser is currently set to block JavaScript. You need to allow JavaScript to use this
+                        service.</p>
+                    <p>To learn how to allow JavaScript or to find out whether your browser supports JavaScript, check
+                        the online help in your web browser.</p>
+                </div>
+            </div>
+        </div>
+    </noscript>
+    <div id="no_cookie" class="no_display">
+        <div class="error_container">
+            <div>
+                <h1>We can't sign you in</h1>
+                <p>Your browser is currently set to block cookies. You need to allow cookies to use this service.</p>
+                <p>Cookies are small text files stored on your computer that tell us when you're signed in. To learn how
+                    to allow cookies, check the online help in your web browser.</p>
+                <script
+                    nonce="MuhLyUpFvB/76dYNNP4lSg==">if (!navigator.cookieEnabled) document.getElementById('no_cookie').className = ''; if (typeof $diags !== 'undefined') $diags.initializationSuccessful = true;</script>
+            </div>
+        </div>
+    </div>
+    <div id="background_branding_container" data-tenant-branding-background-color="true">
+        <img data-tenant-branding-background="true"
+            src="https://iguateste.b2clogin.com/static/tenant/templates/backgrounds/4-2.png" alt="Ilustração">
+    </div>
+    <div class="container  self_asserted_container " role="presentation">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="companyLogo" data-tenant-branding-logo="true"
+                            src="https://iguateste.b2clogin.com/static/tenant/templates/images/logo.svg"
+                            alt="Logotipo da Empresa">
+                        <div id="api" data-name="SelfAsserted" role="main">
+                            <div class="buttons">
+                                <button id="cancel" aria-label="Cancelar" formnovalidate="">Cancelar</button>
+                            </div>
+                            <div class="intro">
+                                <p>Forneça os detalhes a seguir.</p>
+                            </div>
+                            <form id="attributeVerification" action="JavaScript:void(0);">
+                                <div id="passwordEntryMismatch" class="error pageLevel" style="display: none;"
+                                    aria-hidden="true">As senhas não coincidem. Insira a mesma senha nos dois campos e
+                                    tente novamente.</div>
+                                <div id="requiredFieldMissing" class="error pageLevel" style="display: none;"
+                                    aria-hidden="true">Um campo obrigatório não foi preenchido. Preencha todos os campos
+                                    obrigatórios e tente novamente.</div>
+                                <div id="fieldIncorrect" class="error pageLevel" style="display: none;"
+                                    aria-hidden="true">Um ou mais campos foram preenchidos incorretamente. Verifique
+                                    suas entradas e tente novamente.</div>
+                                <div id="claimVerificationServerError" class="error pageLevel" style="display: none;"
+                                    aria-hidden="true"></div>
+                                <div id="attributeList" class="attr">
+                                    <ul>
+                                        <li class="TextBox UserId_li">
+                                            <div class="attrEntry">
+                                                <div class="error itemLevel" role="alert"></div><input id="UserId"
+                                                    class="textInput" type="text" placeholder="Nome de usuário"
+                                                    aria-label="Nome de usuário" pattern="^[a-zA-Z0-9]+[a-zA-Z0-9_-]*$"
+                                                    title="Nome de usuário usado para entrar." aria-required="true"
+                                                    autofocus="autofocus"><a class="helpLink tiny"
+                                                    href="javascript:void(0)"
+                                                    data-help="Nome de usuário usado para entrar.">O que é isto?</a>
+                                            </div>
+                                        </li>
+                                        <li class="Password newPassword_li">
+                                            <div class="attrEntry">
+                                                <div class="error itemLevel" role="alert"></div><input id="newPassword"
+                                                    class="textInput" type="password" placeholder="Nova Senha"
+                                                    aria-label="Nova Senha" title="Inserir nova senha"
+                                                    autocomplete="new-password" aria-required="true"><a
+                                                    class="helpLink tiny" href="javascript:void(0)"
+                                                    data-help="Inserir nova senha">O que é isto?</a>
+                                            </div>
+                                        </li>
+                                        <li class="Password reenterPassword_li">
+                                            <div class="attrEntry">
+                                                <div class="error itemLevel" role="alert"></div><input
+                                                    id="reenterPassword" class="textInput" type="password"
+                                                    placeholder="Confirme a Nova Senha"
+                                                    aria-label="Confirme a Nova Senha" title="Confirme a nova senha"
+                                                    autocomplete="new-password" aria-required="true"><a
+                                                    class="helpLink tiny" href="javascript:void(0)"
+                                                    data-help="Confirme a nova senha">O que é isto?</a>
+                                            </div>
+                                        </li>
+                                        <li class="VerificationControl emailVerificationControl_li">
+                                            <div class="attrEntry"><label id="emailVerificationControl_label"
+                                                    for="emailVerificationControl"></label>
+                                                <div class="error itemLevel" role="alert"></div>
+                                                <div class="verificationControlContent" id="emailVerificationControl">
+                                                    <div class="verificationInfoText">
+                                                        <div id="emailVerificationControl_info_message"
+                                                            aria-hidden="true" role="alert"
+                                                            aria-label="É necessário fazer a verificação. Clique no botão Enviar."
+                                                            style="display: none;">É necessário fazer a verificação.
+                                                            Clique no botão Enviar.</div>
+                                                    </div>
+                                                    <div class="verificationSuccessText">
+                                                        <div id="emailVerificationControl_success_message"
+                                                            aria-hidden="true" role="alert" aria-label=""
+                                                            style="display: none;"></div>
+                                                    </div>
+                                                    <div class="verificationErrorText error">
+                                                        <div id="emailVerificationControl_error_message"
+                                                            aria-hidden="true" role="alert" aria-label=""
+                                                            style="display: none;"></div>
+                                                    </div>
+                                                    <ul>
+                                                        <li class="EmailBox email_li email" aria-hidden="false"
+                                                            style="display: inline;">
+                                                            <div class="attrEntry">
+                                                                <div class="error itemLevel" role="alert"></div><input
+                                                                    id="email" class="textInput" type="email"
+                                                                    placeholder="Endereço de Email"
+                                                                    aria-label="Endereço de Email"
+                                                                    pattern="^[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+                                                                    title="Endereço de email que pode ser usado para entrar em contato com você."
+                                                                    aria-required="true"><a class="helpLink tiny"
+                                                                    href="javascript:void(0)"
+                                                                    data-help="Endereço de email que pode ser usado para entrar em contato com você.">O
+                                                                    que é isto?</a>
+                                                            </div>
+                                                        </li>
+                                                        <li class="TextBox emailVerificationCode_li VerificationCode"
+                                                            aria-hidden="true" style="display: none;">
+                                                            <div class="attrEntry">
+                                                                <div class="error itemLevel" role="alert"></div><input
+                                                                    id="emailVerificationCode" class="textInput"
+                                                                    type="text" placeholder="Código de Verificação"
+                                                                    aria-label="Código de Verificação"
+                                                                    title="Código de verificação recebido no email."
+                                                                    aria-required="true" autocomplete="off"
+                                                                    disabled=""><a class="helpLink tiny"
+                                                                    href="javascript:void(0)"
+                                                                    data-help="Código de verificação recebido no email.">O
+                                                                    que é isto?</a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="working" style="display: none;" aria-hidden="true">
+                                                    </div>
+                                                    <div class="buttons"><button class="sendCode"
+                                                            id="emailVerificationControl_but_send_code" type="button"
+                                                            aria-label="Enviar código de verificação"
+                                                            aria-hidden="false" style="display: inline;">Enviar código
+                                                            de verificação</button><button class="verifyCode"
+                                                            id="emailVerificationControl_but_verify_code" type="button"
+                                                            aria-label="Verificar código" aria-hidden="true"
+                                                            style="display: none;">Verificar código</button><button
+                                                            class="sendNewCode"
+                                                            id="emailVerificationControl_but_send_new_code"
+                                                            type="button" aria-label="Enviar um novo código"
+                                                            aria-hidden="true" style="display: none;">Enviar um novo
+                                                            código</button><button class="changeClaims"
+                                                            id="emailVerificationControl_but_change_claims"
+                                                            type="button" aria-label="Alterar o email Endereço de Email"
+                                                            aria-hidden="true" style="display: none;">Alterar o
+                                                            email</button></div>
+                                                </div><a class="helpLink tiny" href="javascript:void(0)">O que é
+                                                    isto?</a>
+                                            </div>
+                                        </li>
+                                        <li class="TextBox city_li">
+                                            <div class="attrEntry">
+                                                <div class="error itemLevel" role="alert"></div><input id="city"
+                                                    class="textInput" type="text" placeholder="Cidade"
+                                                    aria-label="Cidade"
+                                                    title="A cidade na qual você está localizado."><a
+                                                    class="helpLink tiny" href="javascript:void(0)"
+                                                    data-help="A cidade na qual você está localizado.">O que é isto?</a>
+                                            </div>
+                                        </li>
+                                        <li class="TextBox givenName_li">
+                                            <div class="attrEntry">
+                                                <div class="error itemLevel" role="alert"></div><input id="givenName"
+                                                    class="textInput" type="text" placeholder="Nome" aria-label="Nome"
+                                                    title="O seu nome (também conhecido como primeiro nome)."><a
+                                                    class="helpLink tiny" href="javascript:void(0)"
+                                                    data-help="O seu nome (também conhecido como primeiro nome).">O que
+                                                    é isto?</a>
+                                            </div>
+                                        </li>
+                                        <li class="TextBox surname_li">
+                                            <div class="attrEntry">
+                                                <div class="error itemLevel" role="alert"></div><input id="surname"
+                                                    class="textInput" type="text" placeholder="Sobrenome"
+                                                    aria-label="Sobrenome"
+                                                    title="O seu sobrenome (também conhecido como nome da família ou último nome)."><a
+                                                    class="helpLink tiny" href="javascript:void(0)"
+                                                    data-help="O seu sobrenome (também conhecido como nome da família ou último nome).">O
+                                                    que é isto?</a>
+                                            </div>
+                                        </li>
+                                        <li class="TextBox displayName_li">
+                                            <div class="attrEntry">
+                                                <div class="error itemLevel" role="alert"></div><input id="displayName"
+                                                    class="textInput" type="text" placeholder="Nome para Exibição"
+                                                    aria-label="Nome para Exibição" title="O seu nome de exibição."><a
+                                                    class="helpLink tiny" href="javascript:void(0)"
+                                                    data-help="O seu nome de exibição.">O que é isto?</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="buttons">
+                                    <button id="continue" type="submit" form="attributeVerification"
+                                        aria-disabled="false" aria-label="Criar">Criar</button>
+                                </div>
+
+                                <div class="verifying-modal">
+                                    <div id="verifying_blurb"></div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
