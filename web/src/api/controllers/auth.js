@@ -33,9 +33,7 @@ router.get('/signout', async (req, res) => {
 router.get('/redirect', (req, res) => {
   // determine the reason why the request was sent by checking the state
   // #swagger.tags = ['Auth']
-  if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90118')) {
-    res.redirect('/password');
-  }
+
   if (req.query.state === appSettings.APP_STATES.LOGIN) {
     // prepare the request for authentication
     appSettings.tokenRequest.code = req.query.code;
@@ -49,11 +47,13 @@ router.get('/redirect', (req, res) => {
           givenName: response.account.idTokenClaims.given_name,
         });
       })
-      .catch((error) => {
-        if (error.errorCode === 'request_cannot_be_made') {
+      .catch(() => {
+        if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90091')) {
+          // Send the user home with some message
+          // But always check if your session still exists
           res.redirect('/signin');
-        } else {
-          res.status(500).send('We do not recognize this response!');
+        } else if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90118')) {
+          res.redirect('/password');
         }
       });
   } else if (req.query.state === appSettings.APP_STATES.PASSWORD_RESET) {
@@ -61,9 +61,7 @@ router.get('/redirect', (req, res) => {
     if (req.query.error) {
       // and if the error_description contains AADB2C90091 error code
       // Means user selected the Cancel button on the password reset experience
-      if (JSON.stringify(req.query.error_description).includes('AADB2C90091')) {
-        // Send the user home with some message
-        // But always check if your session still exists
+      if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90091')) {
         res.redirect('/signin');
       }
     } else {
