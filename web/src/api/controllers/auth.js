@@ -67,10 +67,7 @@ router.get('/redirect', (req, res) => {
         res.redirect('/signin');
       }
     } else {
-      res.send({
-        isAuthenticated: !!response.account?.idTokenClaims?.sub,
-        givenName: response.account.idTokenClaims.given_name,
-      });
+      res.redirect('/signin');
     }
   } else {
     res.status(500).send('We do not recognize this response!');
