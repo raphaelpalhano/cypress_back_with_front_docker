@@ -33,7 +33,9 @@ router.get('/signout', async (req, res) => {
 router.get('/redirect', (req, res) => {
   // determine the reason why the request was sent by checking the state
   // #swagger.tags = ['Auth']
-
+  if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90118')) {
+    res.redirect('/password');
+  }
   if (req.query.state === appSettings.APP_STATES.LOGIN) {
     // prepare the request for authentication
     appSettings.tokenRequest.code = req.query.code;
