@@ -20,7 +20,6 @@
                     "required": [
                         "code",
                         "message",
-                        "details",
                         "innerError"
                     ],
                     "properties": {
@@ -29,9 +28,6 @@
                         },
                         "message": {
                             "type": "string"
-                        },
-                        "details": {
-                            "type": "array"
                         },
                         "innerError": {
                             "type": "object",

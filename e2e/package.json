@@ -22,7 +22,6 @@
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": "cypress/support/**/steps/**/*.{js,ts}"
-    
   },
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^11.5.0",
@@ -32,6 +31,7 @@
     "cypress": "10.3.0",
     "cypress-failed-log": "^2.10.0",
     "cypress-mochawesome-reporter": "^3.2.0",
+    "cypress-xpath": "^2.0.1",
     "dotenv": "^16.0.1",
     "faker-br": "^0.4.1",
     "fs-extra": "^10.1.0",

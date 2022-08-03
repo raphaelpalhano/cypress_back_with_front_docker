@@ -8,43 +8,44 @@ Feature: Acessando o sistema de autenticação com CPF
     Background: Acessa o sistem de autenticação
         Given que acesso o sistema de autenticacao
 
-
     @developed
     Scenario: Autenticação com CPF válido
-        When efetuo login com CPF "CPF_valid"
+        When efetuo login valido com "CPF_valid"
         Then devo ser autenticado
-
 
     @developed
     Scenario: Autenticação com CNPJ válido
-        When efetuo login com CPF "CNPJ_valid" 
+        When efetuo login valido com "CNPJ_valid" 
         Then devo ser autenticado
 
 
+    @developed
     Scenario: Autenticação com CPF inválido
-        When efetuo login com CPF "CPF_invalid" 
-        Then devo visualizar a mensagem "CPF ou CNPJ Inválido"
+        When efetuo login invalido com "CPF_invalid" 
+        Then devo visualizar a mensagem "Documento inválido."
 
-
+    @developed
     Scenario: Autenticação com CNPJ inválido
-        When efetuo login com CNPJ "CNPJ_invalid" 
-        Then devo visualizar a mensagem "CPF ou CNPJ Inválido"
+        When efetuo login invalido com "CNPJ_invalid" 
+        Then devo visualizar a mensagem "Documento inválido."
 
 
+    @developed
     Scenario: Autenticação com senha inválida
-        When efetuo login com CPF "password_invalid" 
-        Then devo visualizar a mensagem "Documento ou senha invalido."
+        When efetuo login invalido com "password_invalid" 
+        Then devo visualizar a mensagem generica "Documento e/ou senha inválidos."
 
+
+    @developed
     Scenario: Autenticação com conta não cadastrada
-        When efetuo login com CPF "user_invalid" 
-        Then devo visualizar a mensagem "Documento ou senha invalido."
+        When efetuo login invalido com "user_invalid" 
+        Then devo visualizar a mensagem generica "Documento e/ou senha inválidos."
 
 
+    @developed
     Scenario: Autenticação sem preencher o CPF
-        When efetuo login com CPF "CPF_void" 
-        Then devo visualizar a mensagem "CPF ou CNPJ Inválido"
+        When efetuo login invalido com "CPF_void" 
+        Then devo visualizar a mensagem "Documento inválido."
 
 
-    Scenario: Autenticação sem preencher o password
-        When efetuo login com CPF "password_void"
-        Then devo visualizar a mensagem "Por favor, insira sua senha"
+

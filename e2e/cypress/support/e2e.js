@@ -16,6 +16,7 @@
 // Import plugins
 import 'cypress-failed-log';
 import 'cypress-mochawesome-reporter/register';
+import 'cypress-xpath';
 
 // utils backend
 import './backend/commands/utils/schema.validation';

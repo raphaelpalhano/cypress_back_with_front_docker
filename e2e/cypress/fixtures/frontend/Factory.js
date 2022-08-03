@@ -15,19 +15,35 @@ export class Factory {
       };
     case 'empty':
       return {
-        email: '',
+        user: '',
         password: '',
       };
     case 'CPF_invalid':
       return {
-        email: faker.br.cpf(),
+        user: '09978320',
         password: faker.internet.password(),
       };
     case 'CNPJ_invalid':
       return {
-        email: faker.br.cnpj(),
+        user: '088134631',
         password: faker.internet.password(),
       };
+    case 'password_invalid':
+      return {
+        user: Cypress.env('USER_CPF'),
+        password: faker.internet.password(),
+      };
+    case 'user_invalid':
+      return {
+        user: faker.br.cpf(),
+        password: Cypress.env('PASSWORD_TEST2'),
+      };
+    case 'CPF_void':
+      return {
+        user: ' ',
+        password: Cypress.env('PASSWORD_TEST2'),
+      };
+
     default:
       return { notfound: 'O login não foi encontrado!' };
     }

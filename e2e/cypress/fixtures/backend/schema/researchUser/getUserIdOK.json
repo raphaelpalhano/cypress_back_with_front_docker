@@ -45,13 +45,13 @@
                     "type": "null"
                 },
                 "mobilePhone": {
-                    "type": "string"
+                    "type": "null"
                 },
                 "officeLocation": {
                     "type": "null"
                 },
                 "preferredLanguage": {
-                    "type": "string"
+                    "type": "null"
                 },
                 "surname": {
                     "type": "string"
