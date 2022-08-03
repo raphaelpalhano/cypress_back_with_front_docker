@@ -104,11 +104,6 @@
             "name": "error",
             "in": "query",
             "type": "string"
-          },
-          {
-            "name": "error_description",
-            "in": "query",
-            "type": "string"
           }
         ],
         "responses": {

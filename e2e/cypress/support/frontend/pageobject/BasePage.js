@@ -25,6 +25,10 @@ export class BasePage {
     return elem;
   }
 
+  static getTextByXPath(element) {
+    return this.getElementByXPath(element).invoke('text');
+  }
+
   static validateText(baseValue, comparingValue) {
     expect(baseValue).to.contains(comparingValue);
   }

@@ -38,5 +38,6 @@ module.exports = {
     LOGIN: 'login',
     LOGOUT: 'logout',
     PASSWORD_RESET: 'password_reset',
+    EDIT_PROFILE: 'update_profile',
   },
 };

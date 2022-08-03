@@ -25,9 +25,21 @@ export class LoginHome extends BasePage {
     });
   }
 
+  static makeInvalidLogin() {
+    super.clickOnElement(LoginLocator.BUTTON('next'));
+  }
+
   static authValidation() {
     cy.get('@response').then((response) => {
       expect(response.body.isAuthenticated).equal(true);
     });
+  }
+
+  static getMessage(text) {
+    return super.getElementByXPath(LoginLocator.MESSAGE(text)).invoke('text');
+  }
+
+  static getGenericMessage(text) {
+    return super.getElementByXPath(LoginLocator.GENERICMESSAGE(text)).invoke('text');
   }
 }
