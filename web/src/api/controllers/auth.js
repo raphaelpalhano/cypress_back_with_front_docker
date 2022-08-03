@@ -1,5 +1,6 @@
 const express = require('express');
 const appSettings = require('../../../config/appSettings');
+const errorRedirect = require('../../../helpers/errorRedirect');
 const { getAuthCode, confidentialClientApplication } = require('../../../helpers/msalConfig');
 require('dotenv');
 
@@ -34,53 +35,22 @@ router.get('/redirect', (req, res) => {
   // determine the reason why the request was sent by checking the state
   // #swagger.tags = ['Auth']
 
-  if (req.query.state === appSettings.APP_STATES.LOGIN) {
+  if (req.query.code) {
     // prepare the request for authentication
     appSettings.tokenRequest.code = req.query.code;
-    confidentialClientApplication
+    return confidentialClientApplication
       .acquireTokenByCode(appSettings.tokenRequest)
       .then((response) => {
         req.session.isAuthenticated = !!response.account?.idTokenClaims?.sub;
         req.session.sessionParams = { user: response.account, idToken: response.idToken };
-        res.send({
+        return res.send({
           isAuthenticated: !!response.account?.idTokenClaims?.sub,
           givenName: response.account.idTokenClaims.given_name,
         });
       })
-      .catch(() => {
-        if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90091')) {
-          // Send the user home with some message
-          // But always check if your session still exists
-          res.redirect('/signin');
-        } else if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90118')) {
-          res.redirect('/password');
-        }
-      });
-  } else if (req.query.state === appSettings.APP_STATES.PASSWORD_RESET) {
-    // If the query string has a error param
-    if (req.query.error) {
-      // and if the error_description contains AADB2C90091 error code
-      // Means user selected the Cancel button on the password reset experience
-      if (JSON.stringify(req.query?.error_description)?.includes('AADB2C90091')) {
-        res.redirect('/signin');
-      }
-    } else {
-      res.redirect('/signin');
-    }
-  } else {
-    res.status(500).send('We do not recognize this response!');
+      .catch(() => errorRedirect(req?.query?.error_description, res));
   }
-  // else if (req.query.state === appSettings.APP_STATES.EDIT_PROFILE) {
-  //   appSettings.tokenRequest.scopes = [];
-  //   appSettings.tokenRequest.code = req.query.code;
-
-  //   // Request token with claims, including the name that was updated.
-  //   confidentialClientApplication.acquireTokenByCode(appSettings.tokenRequest).then((response) => {
-  //     req.session.sessionParams = { user: response.account, idToken: response.idToken };
-  //     console.log(`${JSON.stringify(response)}`);
-  //     res.send({ givenName: response.account.idTokenClaims.given_name });
-  //   });
-  // }
+  return errorRedirect(req?.query?.error_description, res);
 });
 
 module.exports = router;
