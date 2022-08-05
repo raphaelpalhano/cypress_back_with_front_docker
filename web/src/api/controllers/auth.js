@@ -1,6 +1,7 @@
 const express = require('express');
 const appSettings = require('../../../config/appSettings');
 const errorRedirect = require('../../../helpers/errorRedirect');
+const { getIguaAccessToken } = require('../../../helpers/iguaHttp');
 const { getAuthCode, confidentialClientApplication } = require('../../../helpers/msalConfig');
 require('dotenv');
 
@@ -40,13 +41,20 @@ router.get('/redirect', (req, res) => {
     appSettings.tokenRequest.code = req.query.code;
     return confidentialClientApplication
       .acquireTokenByCode(appSettings.tokenRequest)
-      .then((response) => {
+      .then(async (response) => {
+        const { id: sessionId } = req.session;
         req.session.isAuthenticated = !!response.account?.idTokenClaims?.sub;
         req.session.sessionParams = { user: response.account, idToken: response.idToken };
-        return res.send({
-          isAuthenticated: !!response.account?.idTokenClaims?.sub,
+        const isAuthenticated = !!response.account?.idTokenClaims?.sub;
+        res.set({
+          isAuthenticated,
           givenName: response.account.idTokenClaims.given_name,
+          sessionId,
         });
+
+        // obtenção de token de api da igua
+        const token = await getIguaAccessToken();
+        return res.redirect(`/home/?token=${JSON.stringify(token)}`);
       })
       .catch(() => errorRedirect(req?.query?.error_description, res));
   }
