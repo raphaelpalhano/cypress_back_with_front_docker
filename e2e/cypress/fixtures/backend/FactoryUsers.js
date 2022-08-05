@@ -131,4 +131,21 @@ export class FactoryUsers {
       return { notfound: 'opcao de usuario nao existe!' };
     }
   }
+
+  static getUserUpdate() {
+    return {
+      displayName: 'Usuario Teste',
+      passwordPolicies: 'DisablePasswordExpiration',
+      passwordProfile: {
+        password: faker.internet.password(),
+      },
+      identities: [
+        {
+          signinType: 'userName',
+          issuer: 'iguateste.onmicrosoft.com',
+          issuerAssignedId: faker.br.cpf(),
+        },
+      ],
+    };
+  }
 }
