@@ -91,17 +91,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "state",
-            "in": "query",
-            "type": "string"
-          },
-          {
             "name": "code",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "error",
             "in": "query",
             "type": "string"
           }
@@ -109,9 +99,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }

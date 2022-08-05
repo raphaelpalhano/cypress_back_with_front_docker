@@ -28,3 +28,15 @@ Cypress.Commands.add('requestWithoutBodyButParam', (method, endpoint, param, fai
   failOnStatusCode,
   timeout,
 }));
+
+Cypress.Commands.add(
+  'requestWithBodyAndParamAndHeader',
+  (method, endpoint, body, param, header, failOnStatusCode = false, timeout = Cypress.env('global_timeout')) => cy.request({
+    method,
+    url: `${endpoint}/${param}`,
+    header,
+    body,
+    failOnStatusCode,
+    timeout,
+  }),
+);

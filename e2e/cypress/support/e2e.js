@@ -29,6 +29,7 @@ import './backend/commands/services/common/rest.service';
 import './backend/commands/services/researchUser.service';
 import './backend/commands/services/createUser.service';
 import './backend/commands/services/deleteUser.service';
+import './backend/commands/services/updateUser.service';
 
 Cypress.Server.defaults({
   delay: 500,
