@@ -1,10 +1,10 @@
 const express = require('express');
-const isAuthenticated = require('../../../helpers/authMiddleware');
+const authMiddleware = require('../../../helpers/authMiddleware');
 
 const router = express.Router();
 
-router.get('/home', isAuthenticated, (req, res) => {
-  const { isAuthenticated: auth } = req.session;
+router.get('/home', authMiddleware, (req, res) => {
+  const { isAuthenticated } = req.session;
   // #swagger.tags = ['Home']
   // #swagger.description = 'Verifica se o usuário está autenticado.'
 
@@ -18,7 +18,7 @@ router.get('/home', isAuthenticated, (req, res) => {
               },
         } */
 
-  return res.send({ isAuthenticated: auth });
+  return res.send({ isAuthenticated });
 });
 
 module.exports = router;
