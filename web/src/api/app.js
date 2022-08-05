@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const swaggerUi = require('swagger-ui-express');
 const compression = require('compression');
+const cookieParser = require('cookie-parser');
 const swaggerFile = require('../../swagger_output.json');
 const appSettings = require('../../config/appSettings');
 
@@ -9,6 +10,7 @@ require('dotenv');
 
 const app = express();
 app.use(compression());
+app.use(cookieParser());
 
 /**
  * Using express-session middleware. Be sure to familiarize yourself with available options

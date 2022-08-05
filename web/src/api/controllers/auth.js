@@ -54,6 +54,8 @@ router.get('/redirect', (req, res) => {
 
         // obtenção de token de api da igua
         const token = await getIguaAccessToken();
+        // opcao de armazenar o token em cookie tb, caso seja melhor
+        // res.cookie('testeCookie', token, { maxAge: 900000, httpOnly: true });
         return res.redirect(`/home/?token=${JSON.stringify(token)}`);
       })
       .catch(() => errorRedirect(req?.query?.error_description, res));
