@@ -1,8 +1,4 @@
 # API_AUTH_AZURE_AD_B2C
-## _Api de autenticação da Iguá Saneamento_
-
-Igua auth realiza o processo de autenticação de rotas a partir do uso do Azure AD B2C como serviço acoplado que permite o uso de single sign-on e login social.
-
 ## Ferramentas e linguagem
 
 A Api foi construída em node js (javascript) e express. Para a visualização de documentação das rotas foi usado o *swagger* que é disponibilizado em um *endpoint* específico `/doc` e que permite consultar todos as rotas disponíveis para uso. Para organizar o projeto utilizou-se o husky, eslint, prettier, commitlint e commitizen. A estrutura do projeto **deve** seguir o seguinte padrão:
