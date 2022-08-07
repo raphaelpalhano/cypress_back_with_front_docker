@@ -1,4 +1,4 @@
-# Iguá Auth
+# API_AUTH_AZURE_AD_B2C
 ## _Api de autenticação da Iguá Saneamento_
 
 Igua auth realiza o processo de autenticação de rotas a partir do uso do Azure AD B2C como serviço acoplado que permite o uso de single sign-on e login social.
